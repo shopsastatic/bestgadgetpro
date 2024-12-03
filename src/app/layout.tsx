@@ -13,7 +13,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = draftMode() as any;
 
   return (
     <html lang="en">
