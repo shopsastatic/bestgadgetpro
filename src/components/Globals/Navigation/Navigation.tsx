@@ -10,7 +10,7 @@ import gql from "graphql-tag";
 async function getData() {
   const menuQuery = gql`
     query MenuQuery {
-      menuItems(where: { location: PRIMARY_MENU }) {
+      menuItems(where: { location: MAIN_MENU }) {
         nodes {
           uri
           target
