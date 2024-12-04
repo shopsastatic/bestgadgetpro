@@ -16,14 +16,6 @@ export async function fetchGraphQL<T = any>(
       }
     }
 
-    const body = JSON.stringify({
-      query,
-      variables: {
-        preview,
-        ...variables,
-      },
-    });
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql`,
       {
@@ -33,11 +25,20 @@ export async function fetchGraphQL<T = any>(
           ...(authHeader && { Authorization: authHeader }),
           ...headers,
         },
-        body,
-        cache: preview ? "no-cache" : "default",
-        next: {
-          tags: ["wordpress"],
-        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            preview,
+            ...variables,
+          },
+        }),
+        cache: preview ? "no-store" : "force-cache",
+        next: preview 
+          ? { revalidate: 0 } 
+          : { 
+              revalidate: 3600,
+              tags: ["wordpress"]
+            },
       },
     );
 
