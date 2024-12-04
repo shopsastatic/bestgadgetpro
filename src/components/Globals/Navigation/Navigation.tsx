@@ -7,6 +7,8 @@ import { MenuItem, RootQueryToMenuItemConnection } from "@/gql/graphql";
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import gql from "graphql-tag";
 
+export const revalidate = 3600;
+
 async function getData() {
   const menuQuery = gql`
     query MenuQuery {
