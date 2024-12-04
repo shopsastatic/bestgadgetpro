@@ -7,6 +7,7 @@ import Navigation from "@/components/Globals/Navigation/Navigation";
 import { PreviewNotice } from "@/components/Globals/PreviewNotice/PreviewNotice";
 
 const inter = Inter({ subsets: ["latin"] });
+export const revalidate = 3600;
 
 export default function RootLayout({
   children,
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {isEnabled && <PreviewNotice />}
-        <Navigation />
+        {/* <Navigation /> */}
         {children}
       </body>
     </html>
