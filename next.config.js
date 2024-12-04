@@ -39,8 +39,10 @@ const nextConfig = {
   },
 
   experimental: {
-    turbotrace: true,
-  }
+    scrollRestoration: true,
+  },
+  
+  trailingSlash: false
 };
 
 module.exports = nextConfig;

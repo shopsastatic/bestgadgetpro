@@ -52,6 +52,7 @@ export default async function Navigation() {
             href={item.uri}
             key={index}
             target={item.target || "_self"}
+            prefetch={false}
           >
             <span itemProp="name">{item.label}</span>
           </Link>
