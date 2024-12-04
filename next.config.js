@@ -40,7 +40,6 @@ const nextConfig = {
 
   experimental: {
     turbotrace: true,
-    optimizeCss: true,
   }
 };
 
