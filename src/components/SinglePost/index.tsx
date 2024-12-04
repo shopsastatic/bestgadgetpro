@@ -693,7 +693,7 @@ const SingleContent: FC<SingleContentProps> = ({ post }) => {
         let result = [];
 
         if (desc.toLowerCase().includes('<ul>') && desc.toLowerCase().includes('<li>')) {
-            const regex = /<li[^>]*>(.*?)<\/li>/gis;
+            const regex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
             const matches = [...desc.matchAll(regex)];
             result = matches.map(match => match[1].trim());
         } else {
