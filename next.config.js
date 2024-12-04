@@ -33,6 +33,33 @@ const nextConfig = {
       }
     ]
   },
+  webpack: (config) => {
+    const oneOf = config.module.rules.find(
+      (rule) => typeof rule.oneOf === 'object'
+    );
+
+    if (oneOf) {
+      const moduleCssRule = oneOf.oneOf.find(
+        (rule) => rule.test && rule.test.toString().includes('module\\.css')
+      );
+
+      if (moduleCssRule) {
+        moduleCssRule.use.forEach((item) => {
+          if (item.loader && item.loader.includes('css-loader')) {
+            item.options = {
+              ...item.options,
+              modules: {
+                ...item.options.modules,
+                mode: 'global'
+              }
+            };
+          }
+        });
+      }
+    }
+
+    return config;
+  },
 
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -41,7 +68,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
   },
-  
+
   trailingSlash: false
 };
 

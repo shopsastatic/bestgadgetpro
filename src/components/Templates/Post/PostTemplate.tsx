@@ -5,6 +5,7 @@ import { fetchGraphQL } from "@/utils/fetchGraphQL";
 
 import styles from "./PostTemplate.module.css";
 import { PostQuery } from "./PostQuery";
+import SingleContent from "@/components/SinglePost";
 
 interface TemplateProps {
   node: ContentNode;
@@ -20,7 +21,7 @@ export default async function PostTemplate({ node }: TemplateProps) {
       <h1 className={styles.title}>{post.title}</h1>
       <div className={styles.author}>By {post.author?.node.name}</div>
 
-      <div dangerouslySetInnerHTML={{ __html: post.content || "" }} />
+      <SingleContent post={post} />
     </div>
   );
 }

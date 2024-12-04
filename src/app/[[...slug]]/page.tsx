@@ -15,7 +15,7 @@ import { SeoQuery } from "@/queries/general/SeoQuery";
 export const revalidate = 600;
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const slug = nextSlugToWpSlug(params.slug);
+  const slug = nextSlugToWpSlug(params?.slug);
   const isPreview = slug.includes("preview");
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
@@ -45,7 +45,7 @@ export function generateStaticParams() {
 }
 
 export default async function Page({ params }: any) {
-  const slug = nextSlugToWpSlug(params.slug);
+  const slug = nextSlugToWpSlug(params?.slug);
   const isPreview = slug.includes("preview");
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(ContentInfoQuery),
