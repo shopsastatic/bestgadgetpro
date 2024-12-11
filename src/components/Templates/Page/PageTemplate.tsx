@@ -2,6 +2,7 @@ import { print } from "graphql/language/printer";
 import { ContentNode, Page } from "@/gql/graphql";
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import { PageQuery } from "./PageQuery";
+import Home from "@/components/Layouts/home";
 
 interface TemplateProps {
   node: ContentNode;
@@ -12,5 +13,15 @@ export default async function PageTemplate({ node }: TemplateProps) {
     id: node.databaseId,
   });
 
-  return <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />;
+  if(node.isFrontPage) {
+    return (
+      <Home />
+    )
+  }
+
+  return (
+    <div className="container">
+      <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />
+    </div>
+  );
 }

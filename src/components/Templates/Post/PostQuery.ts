@@ -11,11 +11,38 @@ export const PostQuery = gql`
       numberOfToplist {
         numberOfToplist
       }
+      categories {
+        nodes {
+          name
+          uri
+        }
+      }
       content
       author {
         node {
-          name
+          databaseId
           uri
+          username
+          name
+          ncUserMeta {
+            ncBio
+            featuredImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            backgroundImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+          description
+          expert {
+            areasOfExpertise
+          }
         }
       }
     }

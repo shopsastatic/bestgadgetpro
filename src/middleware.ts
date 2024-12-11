@@ -7,14 +7,15 @@ export async function middleware(request: NextRequest) {
   }
 
   const basicAuth = `${process.env.WP_USER}:${process.env.WP_APP_PASS}`;
+  const pathName = request.nextUrl.pathname;
 
-  const pathnameWithoutTrailingSlash = request.nextUrl.pathname.replace(
+  const pathNameWithoutTrailingSlash = pathName.replace(
     /\/$/,
     "",
   );
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/redirection/v1/redirect/?filterBy%5Burl-match%5D=plain&filterBy%5Burl%5D=${pathnameWithoutTrailingSlash}`,
+    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/wp-json/redirection/v1/redirect/?filterBy%5Burl-match%5D=plain&filterBy%5Burl%5D=${pathNameWithoutTrailingSlash}`,
     {
       headers: {
         Authorization: `Basic ${Buffer.from(basicAuth).toString("base64")}`,
@@ -27,7 +28,7 @@ export async function middleware(request: NextRequest) {
 
   if (data?.items?.length > 0) {
     const redirect = data.items.find(
-      (item: any) => item.url === pathnameWithoutTrailingSlash,
+      (item: any) => item.url === pathNameWithoutTrailingSlash,
     );
 
     if (!redirect) {
@@ -43,4 +44,36 @@ export async function middleware(request: NextRequest) {
       status: redirect.action_code === 301 ? 308 : 307,
     });
   }
+
+  if (pathNameWithoutTrailingSlash === '/reports') {
+    return NextResponse.rewrite(new URL('/404', request.url), {
+        status: 404,
+        headers: {
+            'X-Robots-Tag': 'noindex'
+        }
+    });
+}
+
+
+  if (pathName.includes('_next') ||
+        pathName.includes('api') ||
+        pathName === '/' ||
+        pathName.includes('favicon') ||
+        pathName.startsWith('/images/') ||
+        pathName.startsWith('/author/') ||
+        pathName.startsWith('/search/') ||
+        pathName.startsWith('/public/')) {
+        return NextResponse.next()
+    }
+
+    const segments = pathName.split('/').filter(Boolean)
+
+    if (segments.length >= 2) {
+        return NextResponse.rewrite(new URL('/404', request.url), {
+            status: 404,
+            headers: {
+                'X-Robots-Tag': 'noindex'
+            }
+        });
+    }
 }

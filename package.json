@@ -10,9 +10,11 @@
   "dependencies": {
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
+    "lucide-react": "^0.464.0",
     "next": "latest",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwindcss": "^3.4.16"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",

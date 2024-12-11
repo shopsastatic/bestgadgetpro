@@ -53,8 +53,9 @@ export default async function Navigation() {
             key={index}
             target={item.target || "_self"}
             prefetch={false}
+            className="text-white"
           >
-            <span itemProp="name">{item.label}</span>
+            <span className="text-sm" itemProp="name">{item.label}</span>
           </Link>
         );
       })}
