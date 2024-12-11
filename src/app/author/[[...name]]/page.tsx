@@ -52,7 +52,7 @@ export const metadata: Metadata = {
 };
 
 
-export default async function Author({ params }: { params: { name: any } }) {
+export default async function Author({ params }: { params: any }) {
     if (!params.name) return notFound();
 
     const authorSlug = params.name.join("/");
