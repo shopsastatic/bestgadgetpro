@@ -61,7 +61,7 @@ const sections = [
 export default function AffiliateDisclosure() {
     return (
         <PageContainer>
-            <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white mt-10 mb-32">
+            <div className="container min-h-screen bg-gradient-to-b from-gray-50 to-white mt-10 mb-32">
                 {/* Hero Section */}
                 <section className="relative bg-gradient-to-b from-blue-900 to-blue-800 text-white py-16 md:py-24 overflow-hidden rounded-lg">
                     <div className="absolute inset-0">
