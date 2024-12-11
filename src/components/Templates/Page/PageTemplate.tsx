@@ -4,11 +4,7 @@ import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import { PageQuery } from "./PageQuery";
 import Home from "@/components/Layouts/home";
 
-interface TemplateProps {
-  node: ContentNode;
-}
-
-export default async function PageTemplate({ node }: TemplateProps) {
+export default async function PageTemplate({ node }: any) {
   const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
     id: node.databaseId,
   });
