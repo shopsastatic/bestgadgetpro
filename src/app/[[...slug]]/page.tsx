@@ -54,19 +54,13 @@ export default async function Page({ params }: any) {
       idType: isPreview ? "DATABASE_ID" : "URI",
     },
   );
-  
-  let dataNode = {} as any
-
-  if(!slug) {
-    if(contentNode) {
-      contentNode.isFrontPage = true
-    }else {
-      dataNode.isFrontPage = true
-    }
-    return <PageTemplate node={contentNode || dataNode} />
-  }
 
   if (!contentNode) return notFound();
+
+  if(!slug) {
+    contentNode.isFrontPage = true
+    return <PageTemplate node={contentNode} />
+  }
   
   switch (contentNode.contentTypeName) {
     case "page":
