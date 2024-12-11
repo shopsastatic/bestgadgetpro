@@ -13,13 +13,7 @@ import { SeoQuery } from "@/queries/general/SeoQuery";
 
 export const revalidate = 600;
 
-interface PageParams {
-  params: {
-    slug?: any;
-  };
-}
-
-export async function generateMetadata({ params }: PageParams) {
+export async function generateMetadata({ params }: any) {
   const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "";
   const isPreview = slug.includes("preview");
 
@@ -49,7 +43,7 @@ export function generateStaticParams() {
   return [];
 }
 
-export default async function Page({ params }: PageParams) {
+export default async function Page({ params }: any) {
   const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "";
   const isPreview = slug.includes("preview");
   
