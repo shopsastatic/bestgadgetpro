@@ -14,7 +14,7 @@ import { SeoQuery } from "@/queries/general/SeoQuery";
 export const revalidate = 600;
 
 export async function generateMetadata({ params }: any) {
-  const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "";
+  const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "/";
   const isPreview = slug.includes("preview");
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
