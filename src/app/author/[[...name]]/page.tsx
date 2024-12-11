@@ -36,7 +36,7 @@ const achievements = [
     }
 ];
 
-export const formatEmailName = (fullName: string = ''): string => {
+export const formatEmailName = (fullName: any) => {
     const firstName = fullName.split(' ')[0].toLowerCase();
 
     return firstName
