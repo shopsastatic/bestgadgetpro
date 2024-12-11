@@ -150,47 +150,49 @@ export default async function Author({ params }: { params: any }) {
                                     </section>
 
                                     {/* Recent Articles */}
-                                    <section>
-                                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Articles</h2>
-                                        <div className="space-y-6">
-                                            {user?.posts?.nodes.map((article: any, index: any) => (
-                                                <article key={index} className="bg-white rounded-xl overflow-hidden border hover:shadow-lg transition-shadow">
-                                                    <Link href={"/" + article.slug} className="flex flex-col md:flex-row group p-4">
-                                                        <div className="relative flex-shrink-0">
-                                                            <Image
-                                                                src={article?.featuredImage?.node?.sourceUrl ?? "/"}
-                                                                alt={article?.featuredImage?.node?.altText ?? ""}
-                                                                width={160}
-                                                                height={160}
-                                                                className="rounded-lg object-cover w-40 h-40 mb-5 md:mb-0"
-                                                            />
-                                                            <span className="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs rounded-full">
-                                                                {article.category ?? ""}
-                                                            </span>
-                                                        </div>
-                                                        <div className="flex-1 pl-0 md:pl-6">
-                                                            <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                                                                <Calendar className="w-4 h-4" />
-                                                                <time dateTime={formatDate(article.date, true)}>{formatDate(article.date, true)}</time>
+                                    {user?.posts?.nodes?.length > 0 && (
+                                        <section>
+                                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Articles</h2>
+                                            <div className="space-y-6">
+                                                {user?.posts?.nodes.map((article: any, index: any) => (
+                                                    <article key={index} className="bg-white rounded-xl overflow-hidden border hover:shadow-lg transition-shadow">
+                                                        <Link href={"/" + article.slug} className="flex flex-col md:flex-row group p-4">
+                                                            <div className="relative flex-shrink-0">
+                                                                <Image
+                                                                    src={article?.featuredImage?.node?.sourceUrl ?? "/"}
+                                                                    alt={article?.featuredImage?.node?.altText ?? ""}
+                                                                    width={160}
+                                                                    height={160}
+                                                                    className="rounded-lg object-cover w-40 h-40 mb-5 md:mb-0"
+                                                                />
+                                                                <span className="absolute top-2 left-2 px-2 py-1 bg-black/70 text-white text-xs rounded-full">
+                                                                    {article.category ?? ""}
+                                                                </span>
                                                             </div>
-                                                            <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-3">
-                                                                {article.title}
-                                                            </h3>
-                                                            {article?.excerpt && (
-                                                                <p className="text-gray-600 line-clamp-2 text-sm">
-                                                                    {article?.excerpt}
-                                                                </p>
-                                                            )}
-                                                            <div className="mt-4 flex items-center gap-2 text-blue-600 font-medium text-sm">
-                                                                Read Review
-                                                                <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                                            <div className="flex-1 pl-0 md:pl-6">
+                                                                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                                                                    <Calendar className="w-4 h-4" />
+                                                                    <time dateTime={formatDate(article.date, true)}>{formatDate(article.date, true)}</time>
+                                                                </div>
+                                                                <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-3">
+                                                                    {article.title}
+                                                                </h3>
+                                                                {article?.excerpt && (
+                                                                    <p className="text-gray-600 line-clamp-2 text-sm">
+                                                                        {article?.excerpt}
+                                                                    </p>
+                                                                )}
+                                                                <div className="mt-4 flex items-center gap-2 text-blue-600 font-medium text-sm">
+                                                                    Read Review
+                                                                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </Link>
-                                                </article>
-                                            ))}
-                                        </div>
-                                    </section>
+                                                        </Link>
+                                                    </article>
+                                                ))}
+                                            </div>
+                                        </section>
+                                    )}
                                 </div>
 
                                 {/* Right Column */}
