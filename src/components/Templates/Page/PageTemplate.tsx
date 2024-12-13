@@ -4,12 +4,12 @@ import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import { PageQuery } from "./PageQuery";
 import Home from "@/components/Layouts/home";
 
-export default async function PageTemplate({ node }: any) {
+export default async function PageTemplate({ node, isFrontPage }: any) {
   const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
     id: node.databaseId,
   });
 
-  if(node.isFrontPage) {
+  if(isFrontPage) {
     return (
       <Home />
     )

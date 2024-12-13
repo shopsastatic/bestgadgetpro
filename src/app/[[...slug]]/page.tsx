@@ -56,12 +56,13 @@ export default async function Page({ params }: any) {
   );
 
   if(!slug) {
-    contentNode.isFrontPage = true
-    return <PageTemplate node={contentNode} />
+    let isFrontPage = true
+    return <PageTemplate node={contentNode} isFrontPage={isFrontPage} />
   }
-
+  
   if (!contentNode) return notFound();
   
+
   switch (contentNode.contentTypeName) {
     case "page":
       return <PageTemplate node={contentNode} />;
