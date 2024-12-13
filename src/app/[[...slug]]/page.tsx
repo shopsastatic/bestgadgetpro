@@ -55,14 +55,12 @@ export default async function Page({ params }: any) {
     },
   );
 
-  if (!contentNode) return notFound();
-
-  console.log(params)
-
   if(!slug) {
     contentNode.isFrontPage = true
     return <PageTemplate node={contentNode} />
   }
+
+  if (!contentNode) return notFound();
   
   switch (contentNode.contentTypeName) {
     case "page":
