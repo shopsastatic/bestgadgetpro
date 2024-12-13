@@ -5,19 +5,28 @@ import { PageQuery } from "./PageQuery";
 import Home from "@/components/Layouts/home";
 
 export default async function PageTemplate({ node, isFrontPage }: any) {
-  const { page } = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
-    id: node.databaseId,
-  });
+  let page;
+  
+  if(node) {
+    const response = await fetchGraphQL<{ page: Page }>(print(PageQuery), {
+      id: node.databaseId,
+    });
+    page = response.page;
+  }
 
   if(isFrontPage) {
     return (
       <Home />
-    )
+    );
   }
 
-  return (
-    <div className="container">
-      <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />
-    </div>
-  );
+  if(node) {
+    return (
+      <div className="container">
+        <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />
+      </div>
+    );
+  }
+
+  return null;
 }
