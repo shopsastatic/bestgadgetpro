@@ -10,12 +10,46 @@ import PageTemplate from "@/components/Templates/Page/PageTemplate";
 import { nextSlugToWpSlug } from "@/utils/nextSlugToWpSlug";
 import PostTemplate from "@/components/Templates/Post/PostTemplate";
 import { SeoQuery } from "@/queries/general/SeoQuery";
+import gql from "graphql-tag";
+import { CategorySeoQuery } from "@/queries/category/CategorySeoQuery";
+import { CategoryQuery } from "@/queries/category/CategoryQuery";
+import CategoryTemplate from "@/components/Templates/Category/CategoryTemplate";
 
 export const revalidate = 600;
 
 export async function generateMetadata({ params }: any) {
   const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "/";
   const isPreview = slug.includes("preview");
+
+  const { node: nodeType } = await fetchGraphQL(
+    print(gql`
+      query NodeTypeQuery($uri: String!) {
+        node: nodeByUri(uri: $uri) {
+          __typename
+        }
+      }
+    `),
+    {
+      uri: slug
+    }
+  );
+
+  if (nodeType?.__typename === 'Category') {
+    const { category } = await fetchGraphQL(
+      print(CategorySeoQuery),
+      {
+        slug: slug
+      }
+    );
+
+    const metadata = setSeoData({ seo: category.seo });
+    return {
+      ...metadata,
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}${slug}`,
+      },
+    } as Metadata;
+  }
 
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(SeoQuery),
@@ -46,7 +80,35 @@ export function generateStaticParams() {
 export default async function Page({ params }: any) {
   const slug = params?.slug ? nextSlugToWpSlug(params.slug) : "";
   const isPreview = slug.includes("preview");
-  
+
+  const { node: nodeType } = await fetchGraphQL(
+    print(gql`
+      query NodeTypeQuery($uri: String!) {
+        node: nodeByUri(uri: $uri) {
+          __typename
+        }
+      }
+    `),
+    {
+      uri: slug
+    }
+  );
+
+  if (nodeType?.__typename === 'Category') {
+    const { category } = await fetchGraphQL(
+      print(CategoryQuery),
+      {
+        slug: slug
+      }
+    );
+
+    category.children.nodes = category?.children?.nodes?.filter(
+      (node: any) => node.name !== "Arborist Merchandising Root"
+    ) ?? [];
+
+    return <CategoryTemplate node={category} />;
+  }
+
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
     print(ContentInfoQuery),
     {
@@ -55,13 +117,13 @@ export default async function Page({ params }: any) {
     },
   );
 
-  if(!slug) {
+  if (!slug) {
     let isFrontPage = true
     return <PageTemplate node={contentNode} isFrontPage={isFrontPage} />
   }
-  
+
   if (!contentNode) return notFound();
-  
+
 
   switch (contentNode.contentTypeName) {
     case "page":

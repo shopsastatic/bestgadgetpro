@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import { getLastPath } from '@/app/categories/page';
 
 export function Breadcrumb({ items }: any) {
   return (
@@ -8,7 +9,7 @@ export function Breadcrumb({ items }: any) {
         <div key={index} className="flex items-center">
           {index > 0 && <ChevronRight className="h-4 w-4 mr-2 text-gray-400" />}
           <Link
-            href={item?.uri ?? "/"}
+            href={getLastPath(item?.uri) ?? "/"}
             className="hover:text-blue-600 transition-colors whitespace-nowrap"
           >
             {item?.name}
