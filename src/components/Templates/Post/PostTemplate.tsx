@@ -8,6 +8,7 @@ import PageContainer from "@/components/Layouts/PageContainer";
 import { PostHeader } from "./PostHeader/PostHeader";
 import ProductCard from "./PostContent/ProductCard";
 import SeoContent from "./PostContent/SeoContent";
+import style from "./PostTemplate.module.css";
 
 interface TemplateProps {
   node: ContentNode;
@@ -22,9 +23,13 @@ export default async function PostTemplate({ node }: TemplateProps) {
 
   return (
     <PageContainer>
-      <PostHeader post={post} />
-      <ProductCard />
-      <SeoContent />
+      <div className={style.navigation}>
+        <PostHeader post={post} />
+        <ProductCard toplistData={toplistData} />
+        <div className="mt-20">
+          <SeoContent />
+        </div>
+      </div>
     </PageContainer>
   );
 }

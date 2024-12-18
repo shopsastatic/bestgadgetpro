@@ -13,11 +13,11 @@ export function PostHeader({
             <Breadcrumb items={post?.categories?.nodes} />
 
             <div className="flex items-start justify-between gap-4 mb-6">
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
                     {post?.title}
                 </h1>
             </div>
-
+            
             <AuthorInfo
                 post={post}
                 publishedAt={post?.date}
