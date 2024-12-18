@@ -91,13 +91,14 @@ const ProfessionalCard = ({ item, index }: any) => {
   };
 
   // Render individual star
-  const renderStar = (filled = false, partial = 0) => {
+  const renderStar = (filled = false, partial = 0, starKey: any) => {
     if (filled) {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
+          width="16"
+          height="16"
+          key={starKey}
           viewBox="0 0 24 24"
           fill="#ffb506"
           className="feather feather-star"
@@ -115,8 +116,9 @@ const ProfessionalCard = ({ item, index }: any) => {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
+          width="16"
+          height="16"
+          key={starKey}
           viewBox="0 0 24 24"
           fill="none"
           className="feather feather-star"
@@ -140,8 +142,9 @@ const ProfessionalCard = ({ item, index }: any) => {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
+          width="16"
+          height="16"
+          key={starKey}
           viewBox="0 0 24 24"
           fill="#f1f1f1"
           className="feather feather-star"
@@ -158,7 +161,7 @@ const ProfessionalCard = ({ item, index }: any) => {
   };
 
   // Render full rating component
-  const renderRating = (rating: any) => {
+  const renderRating = (rating: any, index: any) => {
     rating = Number(rating.toFixed(1));
 
     if (rating >= 9.7) {
@@ -172,15 +175,16 @@ const ProfessionalCard = ({ item, index }: any) => {
     }
 
     return (
-      <div className="stars" style={{ display: 'flex', alignItems: 'center', marginTop: '3px' }}>
+      <div className="stars" key={rating + "-" + index} style={{ display: 'flex', alignItems: 'center', marginTop: '3px' }}>
         {[...Array(5)].map((_, i) => {
+          const starKey = `star-${index}-${i}`;
           if (rating >= i + 1) {
-            return renderStar(true);
+            return renderStar(true, undefined, starKey);
           } else if (rating > i && rating < i + 1) {
             const partial = rating - i;
-            return renderStar(false, partial);
+            return renderStar(false, partial, starKey);
           } else {
-            return renderStar(false);
+            return renderStar(false, undefined, starKey);
           }
         })}
       </div>
@@ -223,24 +227,40 @@ const ProfessionalCard = ({ item, index }: any) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-lg max-w-[1000px] mx-auto border border-gray-100 relative mb-8">
-      <div className="relative">
+      <Link href={item?.url ?? "/"} className="relative">
         <div className='overflow-hidden'>
           <div className={`
             relative transform-gpu
             ${isAnimating ? 'transition-transform duration-500 ease-in-out' : ''}
             ${isExpanded ? 'scale-100' : 'scale-[0.999]'}
           `}>
-            <div className="inline-flex items-center absolute top-0 left-0 z-10">
-              <div className="relative">
-                <div className="w-9 h-9 bg-orange-500 transform" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <Star className="w-4 h-4 text-white" />
+            {index == 0 && (
+              <div className="inline-flex items-center absolute top-0 left-0 z-10">
+                <div className="relative">
+                  <div className="w-9 h-9 bg-orange-500 transform" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <Star className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <div className="bg-gray-50 text-black py-2 px-3">
+                  <span className="font-medium text-sm">Editor's Choice</span>
                 </div>
               </div>
-              <div className="bg-gray-50 text-black py-2 px-3">
-                <span className="font-medium text-sm">Editor's Choice</span>
+            )}
+
+            {index == 1 && (
+              <div className="inline-flex items-center absolute top-0 left-0 z-10">
+                <div className="relative">
+                  <div className="w-9 h-9 bg-orange-500 transform" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <Star className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <div className="bg-gray-50 text-black py-2 px-3">
+                  <span className="font-medium text-sm">Best Value</span>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="p-4 md:p-6">
               <div ref={contentRef}
@@ -256,20 +276,18 @@ const ProfessionalCard = ({ item, index }: any) => {
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row items-start justify-between gap-10 mb-5">
+                  <div className="flex flex-col sm:flex-row items-start justify-between gap-10">
                     <div>
                       <h2 className="text-lg font-bold text-gray-900 line-clamp-2">{item?.title}</h2>
                       {item?.percentageSaved > 0 && (
-                        <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved} %</span>
+                        <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved}%</span>
                       )}
                     </div>
                     <div className="polygon-tag flex flex-col items-center gap-2 mb-4 bg-blue-50 pt-3 pb-8 px-3 -mt-8">
-                      <div className="text-3xl font-bold text-purple-600">9.9</div>
-                      <div>Exceptional</div>
+                      <div className="text-3xl font-bold text-purple-600">{calculateRating(index + 1)?.[1]?.toFixed(1)}</div>
+                      <div>{calculateRating(index + 1)?.[0]}</div>
                       <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 gap-0 fill-current text-yellow-500" />
-                        ))}
+                        {renderRating(calculateRating(index + 1)?.[1], index)}
                       </div>
                     </div>
                   </div>
@@ -304,7 +322,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                     </div>
                   )}
 
-                  <div className="mt-8">
+                  <div className={`${(stringToArray(item?.feats)?.length > 0 || pointToArray(item?.specs_points)?.length > 0) ? 'mt-8' : ''}`}>
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Main Highlights</h3>
                     {item?.cusDescContent1 ? (
                       <>
@@ -321,7 +339,7 @@ const ProfessionalCard = ({ item, index }: any) => {
 
                           <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
                             <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
-                              <Lightbulb className='text-white w-4 h-4'/>
+                              <Lightbulb className='text-white w-4 h-4' />
                             </div>
                             <div>
                               <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle2}</h4>
@@ -367,12 +385,11 @@ const ProfessionalCard = ({ item, index }: any) => {
 
         <div className="bg-white p-4 border-gray-100 sticky bottom-0 rounded-bl-2xl rounded-br-2xl">
           <div className="flex flex-col items-center gap-3">
-            <Link
-              href={item?.url ?? "/"}
+            <button
               className="px-8 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-medium transition-all duration-300 w-fit text-center transform hover:scale-[1.02] active:scale-[0.98]"
             >
               View Deal
-            </Link>
+            </button>
             <button
               onClick={toggleExpand}
               disabled={isAnimating}
@@ -382,7 +399,7 @@ const ProfessionalCard = ({ item, index }: any) => {
             </button>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
