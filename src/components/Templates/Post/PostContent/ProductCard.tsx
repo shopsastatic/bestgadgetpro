@@ -8,7 +8,7 @@ const ProfessionalCard = ({ item, index }: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const contentRef = useRef(null) as any;
-  const [fullHeight, setFullHeight] = useState('350px');
+  const [fullHeight, setFullHeight] = useState('300px');
 
   useEffect(() => {
     if (contentRef.current) {
@@ -28,7 +28,7 @@ const ProfessionalCard = ({ item, index }: any) => {
   const toggleExpand = (e: any) => {
     e.preventDefault();
     if (!isAnimating) {
-      const newHeight = isExpanded ? '350px' : fullHeight;
+      const newHeight = isExpanded ? '300px' : fullHeight;
       if (contentRef.current) {
         contentRef.current.style.maxHeight = newHeight;
       }
@@ -36,20 +36,203 @@ const ProfessionalCard = ({ item, index }: any) => {
     }
   };
 
+  const calculateRating = (rateIndex: any) => {
+    let tag = "Very Good";
+    let point = 9.7;
+
+    switch (rateIndex) {
+      case 1:
+        tag = "Exceptional";
+        point = 9.9;
+        break;
+      case 2:
+        tag = "Exceptional";
+        point = 9.7;
+        break;
+      case 3:
+        tag = "Excellent";
+        point = 9.4;
+        break;
+      case 4:
+        tag = "Excellent";
+        point = 9.2;
+        break;
+      case 5:
+        tag = "Excellent";
+        point = 9.0;
+        break;
+      case 6:
+        tag = "Excellent";
+        point = 8.9;
+        break;
+      case 7:
+        tag = "Very Good";
+        point = 8.7;
+        break;
+      case 8:
+        tag = "Very Good";
+        point = 8.5;
+        break;
+      case 9:
+        tag = "Very Good";
+        point = 8.4;
+        break;
+      case 10:
+        tag = "Good";
+        point = 8.2;
+        break;
+      default:
+        tag = "Good";
+        point = 8.0;
+        break;
+    }
+
+    return [tag, point] as any;
+  };
+
+  // Render individual star
+  const renderStar = (filled = false, partial = 0) => {
+    if (filled) {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="#ffb506"
+          className="feather feather-star"
+          style={{ marginRight: '0px' }}
+        >
+          <polygon
+            stroke="#ffb506"
+            strokeWidth="1"
+            points="12 2 15 8.5 22 9.2 17 14 18.4 21 12 17.8 5.6 21 7 14 2 9.2 9 8.5 12 2"
+          />
+        </svg>
+      );
+    } else if (partial > 0) {
+      const percent = partial * 100;
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="feather feather-star"
+          style={{ marginRight: '0px' }}
+        >
+          <defs>
+            <linearGradient id={`grad${percent}`}>
+              <stop offset={`${percent}%`} stopColor="#ffb506" />
+              <stop offset={`${percent}%`} stopColor="#fff" />
+            </linearGradient>
+          </defs>
+          <polygon
+            stroke="#ffb506"
+            strokeWidth="1"
+            points="12 2 15 8.5 22 9.2 17 14 18.4 21 12 17.8 5.6 21 7 14 2 9.2 9 8.5 12 2"
+            fill={`url(#grad${percent})`}
+          />
+        </svg>
+      );
+    } else {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="#f1f1f1"
+          className="feather feather-star"
+          style={{ marginRight: '0px' }}
+        >
+          <polygon
+            stroke="#ffb506"
+            strokeWidth="1"
+            points="12 2 15 8.5 22 9.2 17 14 18.4 21 12 17.8 5.6 21 7 14 2 9.2 9 8.5 12 2"
+          />
+        </svg>
+      );
+    }
+  };
+
+  // Render full rating component
+  const renderRating = (rating: any) => {
+    rating = Number(rating.toFixed(1));
+
+    if (rating >= 9.7) {
+      rating = 5;
+    } else if (rating >= 9 && rating < 9.7) {
+      rating = rating - 5 + 0.01;
+    } else if (rating > 8.2 && rating < 9) {
+      rating = 4;
+    } else {
+      rating = 3.5;
+    }
+
+    return (
+      <div className="stars" style={{ display: 'flex', alignItems: 'center', marginTop: '3px' }}>
+        {[...Array(5)].map((_, i) => {
+          if (rating >= i + 1) {
+            return renderStar(true);
+          } else if (rating > i && rating < i + 1) {
+            const partial = rating - i;
+            return renderStar(false, partial);
+          } else {
+            return renderStar(false);
+          }
+        })}
+      </div>
+    );
+  };
+
+  const stringToArray = (str: any) => {
+    if (!str) return [];
+
+    return str.split('\n')
+      .map((line: any) => line.trim())
+      .filter((line: any) => line.length > 0);
+  };
+
+  const pointToArray = (point: any) => {
+    if (!point) return [];
+
+    return point.split(' ')
+      .map((line: any) => line.trim())
+      .filter((line: any) => line.length > 0);
+  };
+
+  const processDescription = (desc: any) => {
+    if (!desc) return [];
+
+    let result = [];
+
+    if (desc.toLowerCase().includes('<ul>') && desc.toLowerCase().includes('<li>')) {
+      const regex = /<li[^>]*>(.*?)<\/li>/gis;
+      const matches = [...desc.matchAll(regex)];
+      result = matches.map(match => match[1].trim());
+    } else {
+      result = desc.split('<br />')
+        .map((line: any) => line.trim())
+        .filter((line: any) => line.length > 0);
+    }
+
+    return result;
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-lg max-w-[1000px] mx-auto border border-gray-100 relative mb-8">
       <div className="relative">
-        <div
-          className='overflow-hidden'
-        >
+        <div className='overflow-hidden'>
           <div className={`
             relative transform-gpu
             ${isAnimating ? 'transition-transform duration-500 ease-in-out' : ''}
             ${isExpanded ? 'scale-100' : 'scale-[0.999]'}
           `}>
-            <div className="inline-flex items-center absolute top-4 left-4 z-10">
+            <div className="inline-flex items-center absolute top-0 left-0 z-10">
               <div className="relative">
-                <div className="w-12 h-9 bg-orange-500 transform" />
+                <div className="w-9 h-9 bg-orange-500 transform" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <Star className="w-4 h-4 text-white" />
                 </div>
@@ -65,9 +248,9 @@ const ProfessionalCard = ({ item, index }: any) => {
             flex flex-col md:flex-row gap-6 transition-all duration-500 ease-in-out
             ${isAnimating ? 'transition-timing-function-ease-in-out' : ''}
           `}
-                style={{ maxHeight: '350px' }}>
+                style={{ maxHeight: '300px' }}>
                 <div className="flex justify-center items-center md:w-48 shrink-0">
-                  <div className="bg-white rounded-xl flex items-center justify-center mt-10">
+                  <div className="bg-white rounded-xl flex items-center justify-center mt-20">
                     <img src={item?.img} alt={item?.title} className="w-32 h-32 object-contain" />
                   </div>
                 </div>
@@ -75,7 +258,10 @@ const ProfessionalCard = ({ item, index }: any) => {
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row items-start justify-between gap-10 mb-5">
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 line-clamp-3">{item?.title}</h2>
+                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2">{item?.title}</h2>
+                      {item?.percentageSaved > 0 && (
+                        <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved} %</span>
+                      )}
                     </div>
                     <div className="polygon-tag flex flex-col items-center gap-2 mb-4 bg-blue-50 pt-3 pb-8 px-3 -mt-8">
                       <div className="text-3xl font-bold text-purple-600">9.9</div>
@@ -88,72 +274,79 @@ const ProfessionalCard = ({ item, index }: any) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {[
-                      { score: '9.9', label: 'High Accuracy Detection' },
-                      { score: '9.9', label: 'Fast 3-Second Results' },
-                      { score: '9.7', label: 'Multi-Purpose' }
-                    ].map((scoreItem, idx) => (
-                      <div key={idx} className="bg-orange-50 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Check className="w-5 h-5 text-orange-600" />
-                          <div className="text-lg font-bold text-gray-900">{scoreItem.score}</div>
-                        </div>
-                        <div className="text-sm text-gray-500">{scoreItem.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Key Features</h3>
-                    <div className="grid grid-cols-1 gap-4 mb-8">
-                      {[
-                        'Detects multiple radiation types with upgraded Geiger-Müller tube',
-                        'Quick 3-second results with color touchscreen display',
-                        'Tests water quality and environmental radiation',
-                        'Professional Grade Results'
-                      ].map((feature, idx) => (
-                        <div key={idx} className="flex items-center gap-3 rounded-xl">
-                          <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                            <Check className="w-3 h-3 text-blue-600" />
+                  {pointToArray(item?.specs_points)?.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      {pointToArray(item?.specs_points)?.map((scoreItem: any, idx: any) => (
+                        <div key={idx} className="bg-orange-50 p-4 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Check className="w-5 h-5 text-orange-600" />
+                            <div className="text-lg font-bold text-gray-900">{scoreItem}</div>
                           </div>
-                          <span className="text-gray-700 text-base">{feature}</span>
+                          <div className="text-sm text-gray-500">{stringToArray(item?.specs)[idx]}</div>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  )}
+
+                  {stringToArray(item?.feats)?.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="text-lg font-semibold mb-4 text-gray-900">Key Features</h3>
+                      <div className="grid grid-cols-1 gap-4 mb-8">
+                        {stringToArray(item?.feats).map((feature: any, idx: any) => (
+                          <div key={idx} className="flex items-center gap-3 rounded-xl">
+                            <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                              <Check className="w-3 h-3 text-blue-600" />
+                            </div>
+                            <span className="text-gray-700 text-base">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="mt-8">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Main Highlights</h3>
-                    <div className="space-y-4">
-                      {[
-                        {
-                          icon: <Shield className="w-4 h-4 text-white" />,
-                          title: 'Key Features',
-                          description: 'Advanced radiation detection, water quality testing, and quick results display make this device a comprehensive safety tool.'
-                        },
-                        {
-                          icon: <Lightbulb className="w-4 h-4 text-white" />,
-                          title: 'Ideal for Environmental Safety Monitoring',
-                          description: 'Perfect for homeowners, travelers, and safety professionals who need reliable radiation and water quality monitoring.'
-                        },
-                        {
-                          icon: <Users className="w-4 h-4 text-white" />,
-                          title: 'Praised for Versatile Testing Capabilities',
-                          description: 'Users appreciate the device\'s ability to test multiple elements, from radiation to water quality, with quick and accurate results.'
-                        }
-                      ].map((highlight, idx) => (
-                        <div key={idx} className="flex gap-3 bg-purple-50 p-4 rounded-xl">
-                          <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
-                            {highlight.icon}
+                    {item?.cusDescContent1 ? (
+                      <>
+                        <div className="space-y-4 list-disc">
+                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                              <Shield className='text-white w-4 h-4' />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle1}</h4>
+                              <p className="text-gray-600 text-sm">{item?.cusDescContent1}</p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="font-medium text-gray-900 mb-1">{highlight.title}</h4>
-                            <p className="text-gray-600 text-sm">{highlight.description}</p>
+
+                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                              <Lightbulb className='text-white w-4 h-4'/>
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle2}</h4>
+                              <p className="text-gray-600 text-sm">{item?.cusDescContent2}</p>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                              <Users className='text-white w-4 h-4' />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle3}</h4>
+                              <p className="text-gray-600 text-sm">{item?.cusDescContent3}</p>
+                            </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </>
+                    ) :
+                      <ul className="space-y-4 list-disc pl-4">
+                        {processDescription(item?.description)?.map((highlight: any, index: any) => (
+                          <li key={index}>{highlight}</li>
+                        ))}
+                      </ul>
+                    }
                   </div>
                 </div>
               </div>
