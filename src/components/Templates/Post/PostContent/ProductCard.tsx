@@ -213,7 +213,7 @@ const ProfessionalCard = ({ item, index }: any) => {
     let result = [];
 
     if (desc.toLowerCase().includes('<ul>') && desc.toLowerCase().includes('<li>')) {
-      const regex = /<li[^>]*>(.*?)<\/li>/gis;
+      const regex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
       const matches = [...desc.matchAll(regex)];
       result = matches.map(match => match[1].trim());
     } else {
@@ -235,9 +235,9 @@ const ProfessionalCard = ({ item, index }: any) => {
             ${isExpanded ? 'scale-100' : 'scale-[0.999]'}
           `}>
             {index == 0 && (
-              <div className="inline-flex items-center absolute top-0 left-0 z-10">
+              <div className="inline-flex items-center absolute top-0 left-0 z-10 bg-orange-500">
                 <div className="relative">
-                  <div className="w-9 h-9 bg-orange-500 transform" />
+                  <div className="w-10 h-9 bg-orange-500 transform" />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <Star className="w-4 h-4 text-white" />
                   </div>
@@ -249,9 +249,9 @@ const ProfessionalCard = ({ item, index }: any) => {
             )}
 
             {index == 1 && (
-              <div className="inline-flex items-center absolute top-0 left-0 z-10">
+              <div className="inline-flex items-center absolute top-0 left-0 z-10 bg-orange-500">
                 <div className="relative">
-                  <div className="w-9 h-9 bg-orange-500 transform" />
+                  <div className="w-10 h-9 bg-orange-500 transform" />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                     <Star className="w-4 h-4 text-white" />
                   </div>
@@ -269,7 +269,7 @@ const ProfessionalCard = ({ item, index }: any) => {
             ${isAnimating ? 'transition-timing-function-ease-in-out' : ''}
           `}
                 style={{ maxHeight: '300px' }}>
-                <div className="flex justify-center items-center md:w-48 shrink-0">
+                <div className="featuredImage flex justify-center items-center md:w-48 shrink-0">
                   <div className="bg-white rounded-xl flex items-center justify-center mt-20">
                     <img src={item?.img} alt={item?.title} className="w-32 h-32 object-contain" />
                   </div>
@@ -278,7 +278,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row items-start justify-between gap-10">
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2">{item?.title}</h2>
+                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2 mb-10 md:mb-0">{item?.title}</h2>
                       {item?.percentageSaved > 0 && (
                         <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved}%</span>
                       )}
@@ -313,7 +313,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                         {stringToArray(item?.feats).map((feature: any, idx: any) => (
                           <div key={idx} className="flex items-center gap-3 rounded-xl">
                             <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                              <Check className="w-3 h-3 text-blue-600" />
+                              <Check className="w-4 h-4 text-blue-600" />
                             </div>
                             <span className="text-gray-700 text-base">{feature}</span>
                           </div>
