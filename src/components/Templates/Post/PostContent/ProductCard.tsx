@@ -264,10 +264,7 @@ const ProfessionalCard = ({ item, index }: any) => {
 
             <div className="p-4 md:p-6">
               <div ref={contentRef}
-                className={`
-            flex flex-col md:flex-row gap-6 transition-all duration-500 ease-in-out
-            ${isAnimating ? 'transition-timing-function-ease-in-out' : ''}
-          `}
+                className={`flex flex-col md:flex-row gap-14 transition-all duration-500 ease-in-out ${isAnimating ? 'transition-timing-function-ease-in-out' : ''}`}
                 style={{ maxHeight: '300px' }}>
                 <div className="featuredImage flex justify-center items-center md:w-48 shrink-0">
                   <div className="bg-white rounded-xl flex items-center justify-center mt-20">
@@ -276,95 +273,97 @@ const ProfessionalCard = ({ item, index }: any) => {
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row items-start justify-between gap-10">
+                  <div className="flex flex-col sm:flex-row items-start justify-between gap-20">
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2 mb-10 md:mb-0">{item?.title}</h2>
+                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2 mb-10">{item?.title}</h2>
                       {item?.percentageSaved > 0 && (
                         <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved}%</span>
                       )}
+
+                      {pointToArray(item?.specs_points)?.length > 0 && (
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          {pointToArray(item?.specs_points)?.map((scoreItem: any, idx: any) => (
+                            <div key={idx} className="bg-orange-50 p-4 rounded-lg">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Check className="w-5 h-5 text-orange-600" />
+                                <div className="text-lg font-bold text-gray-900">{scoreItem}</div>
+                              </div>
+                              <div className="text-sm text-gray-500">{stringToArray(item?.specs)[idx]}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+
+                      {stringToArray(item?.feats)?.length > 0 && (
+                        <div className="mt-8">
+                          <h3 className="text-lg font-semibold mb-4 text-gray-900">Key Features</h3>
+                          <div className="grid grid-cols-1 gap-4 mb-8">
+                            {stringToArray(item?.feats).map((feature: any, idx: any) => (
+                              <div key={idx} className="flex items-center gap-3 rounded-xl">
+                                <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                                  <Check className="w-4 h-4 text-blue-600" />
+                                </div>
+                                <span className="text-gray-700 text-base">{feature}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className={`${(stringToArray(item?.feats)?.length > 0 || pointToArray(item?.specs_points)?.length > 0) ? 'mt-8' : ''}`}>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Main Highlights</h3>
+                        {item?.cusDescContent1 ? (
+                          <>
+                            <div className="space-y-4 list-disc">
+                              <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                                <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                                  <Shield className='text-white w-4 h-4' />
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle1}</h4>
+                                  <p className="text-gray-600 text-sm">{item?.cusDescContent1}</p>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                                <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                                  <Lightbulb className='text-white w-4 h-4' />
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle2}</h4>
+                                  <p className="text-gray-600 text-sm">{item?.cusDescContent2}</p>
+                                </div>
+                              </div>
+
+                              <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
+                                <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
+                                  <Users className='text-white w-4 h-4' />
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle3}</h4>
+                                  <p className="text-gray-600 text-sm">{item?.cusDescContent3}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) :
+                          <ul className="space-y-4 list-disc pl-4">
+                            {processDescription(item?.description)?.map((highlight: any, index: any) => (
+                              <li key={index}>{highlight}</li>
+                            ))}
+                          </ul>
+                        }
+                      </div>
                     </div>
-                    <div className="polygon-tag flex flex-col items-center gap-2 mb-4 bg-blue-50 pt-3 pb-8 px-3 -mt-8">
+
+                    <div className="polygon-tag flex flex-col items-center gap-2 mb-4 bg-blue-50 pt-3 pb-8 px-3 -mt-8 mr-6">
                       <div className="text-3xl font-bold text-purple-600">{calculateRating(index + 1)?.[1]?.toFixed(1)}</div>
                       <div>{calculateRating(index + 1)?.[0]}</div>
                       <div className="flex gap-0.5">
                         {renderRating(calculateRating(index + 1)?.[1], index)}
                       </div>
                     </div>
-                  </div>
-
-                  {pointToArray(item?.specs_points)?.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      {pointToArray(item?.specs_points)?.map((scoreItem: any, idx: any) => (
-                        <div key={idx} className="bg-orange-50 p-4 rounded-lg">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Check className="w-5 h-5 text-orange-600" />
-                            <div className="text-lg font-bold text-gray-900">{scoreItem}</div>
-                          </div>
-                          <div className="text-sm text-gray-500">{stringToArray(item?.specs)[idx]}</div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {stringToArray(item?.feats)?.length > 0 && (
-                    <div className="mt-8">
-                      <h3 className="text-lg font-semibold mb-4 text-gray-900">Key Features</h3>
-                      <div className="grid grid-cols-1 gap-4 mb-8">
-                        {stringToArray(item?.feats).map((feature: any, idx: any) => (
-                          <div key={idx} className="flex items-center gap-3 rounded-xl">
-                            <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                              <Check className="w-4 h-4 text-blue-600" />
-                            </div>
-                            <span className="text-gray-700 text-base">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={`${(stringToArray(item?.feats)?.length > 0 || pointToArray(item?.specs_points)?.length > 0) ? 'mt-8' : ''}`}>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Main Highlights</h3>
-                    {item?.cusDescContent1 ? (
-                      <>
-                        <div className="space-y-4 list-disc">
-                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
-                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
-                              <Shield className='text-white w-4 h-4' />
-                            </div>
-                            <div>
-                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle1}</h4>
-                              <p className="text-gray-600 text-sm">{item?.cusDescContent1}</p>
-                            </div>
-                          </div>
-
-                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
-                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
-                              <Lightbulb className='text-white w-4 h-4' />
-                            </div>
-                            <div>
-                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle2}</h4>
-                              <p className="text-gray-600 text-sm">{item?.cusDescContent2}</p>
-                            </div>
-                          </div>
-
-                          <div className="flex gap-3 bg-purple-50 p-4 rounded-xl">
-                            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center shrink-0 mt-1">
-                              <Users className='text-white w-4 h-4' />
-                            </div>
-                            <div>
-                              <h4 className="font-medium text-gray-900 mb-1">{item?.cusDescTitle3}</h4>
-                              <p className="text-gray-600 text-sm">{item?.cusDescContent3}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    ) :
-                      <ul className="space-y-4 list-disc pl-4">
-                        {processDescription(item?.description)?.map((highlight: any, index: any) => (
-                          <li key={index}>{highlight}</li>
-                        ))}
-                      </ul>
-                    }
                   </div>
                 </div>
               </div>
