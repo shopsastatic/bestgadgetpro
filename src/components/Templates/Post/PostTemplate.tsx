@@ -21,8 +21,6 @@ export default async function PostTemplate({ node }: TemplateProps) {
 
   const toplistData = JSON.parse(post?.contentEggData as any)
 
-  console.log(toplistData)
-
   return (
     <PageContainer>
       <div className={style.navigation}>

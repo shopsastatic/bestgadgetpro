@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     description: "Explore our comprehensive collection of product categories featuring expert reviews and detailed comparisons.",
 };
 
-// Map icons to categories based on cssClasses
 const getCategoryIcon = (cssClasses: string[] = []) => {
     const iconMap: { [key: string]: JSX.Element } = {
         'electronics': <Smartphone className="w-6 h-6" />,
@@ -36,10 +35,31 @@ export function getLastPath(url: any) {
     return null;
 }
 
-export default async function CategoriesPage() {
+function transformMenuItems(menuItems: any) {
+    const result: any = [];
+    let currentParent: any | null = null;
+  
+    menuItems.nodes.forEach((item: any) => {
+      if (item.parentId === null) {
+        const parentItem = {
+          ...item,
+          childs: []
+        };
+        result.push(parentItem);
+        currentParent = parentItem;
+      } else if (currentParent) {
+        currentParent.childs?.push(item);
+      }
+    });
+  
+    return result;
+  }
 
+export default async function CategoriesPage() {
     try {
-        const { categories } = await fetchGraphQL<any>(print(CategoriesQuery));
+        const {menuItems} = await fetchGraphQL<any>(print(CategoriesQuery));
+        const transformedMenu = transformMenuItems(menuItems);
+        
         return (
             <PageContainer>
                 <div className="container min-h-screen bg-gray-50 mt-10 mb-20">
@@ -61,7 +81,7 @@ export default async function CategoriesPage() {
                     <section className="py-12">
                         <div className="mx-auto px-0 md:px-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {categories?.nodes?.filter((category: any) =>
+                                {transformedMenu?.filter((category: any) =>
                                     category.slug !== 'uncategorized'
                                 )?.map((category: any) => (
                                     <div key={category.id} className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow">
@@ -74,7 +94,7 @@ export default async function CategoriesPage() {
                                                     </div>
                                                     <div>
                                                         <h2 className="text-lg font-semibold text-gray-900">
-                                                            {category.name}
+                                                            {category.label}
                                                         </h2>
                                                         {category.cssClasses?.includes('trending') && (
                                                             <span className="inline-flex items-center text-xs text-blue-600 mt-1">
@@ -91,16 +111,16 @@ export default async function CategoriesPage() {
 
                                             {/* Subcategories */}
                                             <div className="flex-1"> {/* Thêm flex-1 để đẩy link xuống dưới */}
-                                                {category.children?.nodes?.length > 0 && (
+                                                {category.childs?.length > 0 && (
                                                     <ul className="space-y-3">
-                                                        {category.children?.nodes?.slice(0, 5).map((sub: any) => (
+                                                        {category.childs?.slice(0, 5).map((sub: any) => (
                                                             <li key={sub.id}>
                                                                 <Link
-                                                                    href={getLastPath(sub.slug) ?? "/"}
+                                                                    href={getLastPath(sub.uri) ?? "/"}
                                                                     className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
                                                                 >
                                                                     <span className="h-1 w-1 bg-gray-300 rounded-full mr-3"></span>
-                                                                    {sub.name}
+                                                                    {sub.label}
                                                                 </Link>
                                                             </li>
                                                         ))}
@@ -111,7 +131,7 @@ export default async function CategoriesPage() {
                                             {/* View All Link */}
                                             <div className="pt-4 border-t mt-auto"> {/* Thêm mt-auto */}
                                                 <Link
-                                                    href={getLastPath(category.slug) ?? "/"}
+                                                    href={getLastPath(category.uri) ?? "/"}
                                                     className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
                                                 >
                                                     View All {category.label}

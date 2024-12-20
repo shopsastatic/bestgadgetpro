@@ -26,6 +26,11 @@ const PageContainer = async ({ children }: { children: React.ReactNode }) => {
                     uri
                     target
                     label
+                    parentId
+                    menuAddons {
+                        menuIcon
+                        trending
+                    }
                 }
             }
         }
@@ -35,16 +40,15 @@ const PageContainer = async ({ children }: { children: React.ReactNode }) => {
         menuItems: RootQueryToMenuItemConnection;
     }>(print(menuQuery));
 
-    const { menuSidebarItems } = await fetchGraphQL<{
-        menuSidebarItems: any;
-    }>(print(menuSidebarQuery));
+    const menuSidebarItems = await fetchGraphQL<{
+        menuItems: any;
+    }>(print(menuSidebarQuery)) as any;
 
-
-    console.log(menuSidebarItems)
+    const menuSidebar = menuSidebarItems.menuItems
 
     return (
         <div>
-            <Header menuItems={menuItems} menuSidebarItems={menuSidebarItems} />
+            <Header menuItems={menuItems} menuSidebarItems={menuSidebar} />
             <div>
                 {children}
             </div>

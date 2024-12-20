@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Star, Check, Shield, Heart, Lightbulb, Users } from 'lucide-react';
+import { Star, Check, Shield, Heart, Lightbulb, Users, Diamond } from 'lucide-react';
 import Link from 'next/link';
 
 const ProfessionalCard = ({ item, index }: any) => {
@@ -253,7 +253,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                 <div className="relative">
                   <div className="w-10 h-9 bg-orange-500 transform" />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <Star className="w-4 h-4 text-white" />
+                    <Diamond className="w-4 h-4 text-white" />
                   </div>
                 </div>
                 <div className="bg-gray-50 text-black py-2 px-3">
@@ -261,6 +261,8 @@ const ProfessionalCard = ({ item, index }: any) => {
                 </div>
               </div>
             )}
+
+            {/* <div className='bg-black text-white w-fit px-4 py-2 absolute text-lg top-20'>{index + 1}</div> */}
 
             <div className="p-4 md:p-6">
               <div ref={contentRef}
@@ -275,13 +277,13 @@ const ProfessionalCard = ({ item, index }: any) => {
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row items-start justify-between gap-20">
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2 mb-10">{item?.title}</h2>
+                      <h2 className="text-lg font-bold text-gray-900 line-clamp-2">{item?.title}</h2>
                       {item?.percentageSaved > 0 && (
                         <span className='bg-red-500 text-white py-0.5 px-2.5 rounded text-sm my-2 block w-fit'>-{item?.percentageSaved}%</span>
                       )}
 
                       {pointToArray(item?.specs_points)?.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
                           {pointToArray(item?.specs_points)?.map((scoreItem: any, idx: any) => (
                             <div key={idx} className="bg-orange-50 p-4 rounded-lg">
                               <div className="flex items-center gap-2 mb-2">
@@ -300,7 +302,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                           <h3 className="text-lg font-semibold mb-4 text-gray-900">Key Features</h3>
                           <div className="grid grid-cols-1 gap-4 mb-8">
                             {stringToArray(item?.feats).map((feature: any, idx: any) => (
-                              <div key={idx} className="flex items-center gap-3 rounded-xl">
+                              <div key={idx} className="flex items-start gap-3 rounded-xl">
                                 <div className="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
                                   <Check className="w-4 h-4 text-blue-600" />
                                 </div>
@@ -312,7 +314,7 @@ const ProfessionalCard = ({ item, index }: any) => {
                       )}
 
                       <div className={`${(stringToArray(item?.feats)?.length > 0 || pointToArray(item?.specs_points)?.length > 0) ? 'mt-8' : ''}`}>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Main Highlights</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-10">Main Highlights</h3>
                         {item?.cusDescContent1 ? (
                           <>
                             <div className="space-y-4 list-disc">
@@ -355,6 +357,13 @@ const ProfessionalCard = ({ item, index }: any) => {
                           </ul>
                         }
                       </div>
+
+                      {item?.prodShortDesc && (
+                        <div className='mt-10'>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-2 mt-10">Short Description</h3>
+                          <p dangerouslySetInnerHTML={{ __html: item?.prodShortDesc }}></p>
+                        </div>
+                      )}
                     </div>
 
                     <div className="polygon-tag flex flex-col items-center gap-2 mb-4 bg-blue-50 pt-3 pb-8 px-3 -mt-8 mr-6">

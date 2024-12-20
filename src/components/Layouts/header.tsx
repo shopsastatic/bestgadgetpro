@@ -9,12 +9,10 @@ import MobileNavigation from '../MobileNav';
 export const Header = ({ menuItems, menuSidebarItems }: any) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  console.log(menuSidebarItems)
-
   return (
     <>
       {/* Mobile Navigation */}
-      <MobileNavigation isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <MobileNavigation menuSidebarItems={menuSidebarItems} isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
 
       {/* Header */}
       <header className="bg-gray-900 text-gray-100">

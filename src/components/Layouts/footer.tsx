@@ -139,7 +139,7 @@ const SeoContent = () => {
                         </div>
                     </div>
                     <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-gray-400">
-                        © 2024 TechReviews. All rights reserved.
+                        © 2024 BestGadgetPro. All rights reserved.
                     </div>
                 </div>
             </div>

@@ -1,21 +1,17 @@
 import { gql } from 'graphql-tag';
 
 export const CategoriesQuery = gql`
-  query GetCategories {
-    categories(where: { parent: null }, first: 100) {
+  query MenuSideBarQuery {
+    menuItems(where: { location: CATEGORIES }) {
       nodes {
-        id
-        name
-        slug
-        ... on Category {
-          children {
-            nodes {
-              id
-              name
-              slug
-            }
+          uri
+          target
+          label
+          parentId
+          menuAddons {
+            menuIcon
+            trending
           }
-        }
       }
     }
   }

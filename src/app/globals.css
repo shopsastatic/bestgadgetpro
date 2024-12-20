@@ -15,8 +15,9 @@ body {
   color: #000;
   background: #fff;
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
 .container {
   max-width: 1000px;
   margin-left: auto;
