@@ -47,7 +47,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ onClose, isOpen, me
           
           return {
             name: mainItem.label,
-            screen: mainItem.uri.replace(/\//g, ''),
+            screen: mainItem?.uri?.replace(/\//g, ''),
             uri: mainItem.uri,
             hasChildren
           };
@@ -57,7 +57,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ onClose, isOpen, me
 
     // Create child screens for each main menu item
     mainMenuItems.forEach((mainItem, index) => {
-      const screenKey = mainItem.uri.replace(/\//g, '');
+      const screenKey = mainItem?.uri?.replace(/\//g, '');
       
       // Find the next main menu item
       const nextMainItemIndex = items.findIndex((item, idx) => 
@@ -74,7 +74,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ onClose, isOpen, me
           title: mainItem.label,
           items: children.map(child => ({
             name: child.label,
-            screen: child.uri.replace(/\//g, ''),
+            screen: child?.uri?.replace(/\//g, ''),
             uri: child.uri,
             hasChildren: false
           }))

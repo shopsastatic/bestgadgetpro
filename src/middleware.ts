@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   const basicAuth = `${process.env.WP_USER}:${process.env.WP_APP_PASS}`;
   const pathName = request.nextUrl.pathname;
 
-  const pathNameWithoutTrailingSlash = pathName.replace(
+  const pathNameWithoutTrailingSlash = pathName?.replace(
     /\/$/,
     "",
   );

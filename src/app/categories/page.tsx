@@ -29,7 +29,7 @@ const getCategoryIcon = (cssClasses: string[] = []) => {
 };
 export function getLastPath(url: any) {
     if (url) {
-        const cleanUrl = url.replace(/\/$/, '');
+        const cleanUrl = url?.replace(/\/$/, '');
         return cleanUrl.split('/').pop() + '/';
     }
     return null;
