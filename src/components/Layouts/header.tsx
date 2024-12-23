@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import MobileNavigation from '../MobileNav';
 import lodash from 'lodash';
+import { getLastPath } from '@/app/categories/page';
 
 // Cache structure to store search results
 const searchCache = new Map();
@@ -97,7 +98,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         <div className="py-2">
           {searchResults.map((result) => (
             <Link
-              href={result.url}
+              href={getLastPath(result?.url ?? "/") ?? "/"}
               key={`${result.type}-${result.id}`}
               onClick={() => setShowDropdown(false)}
             >
