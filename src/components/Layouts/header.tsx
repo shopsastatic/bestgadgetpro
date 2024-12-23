@@ -70,7 +70,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
 
         <div className="hidden md:block bg-gray-800">
           <nav className="container mx-auto !py-0">
-            <ul className="flex items-center justify-between h-12 overflow-x-auto">
+            <ul className="flex items-center justify-center gap-7 h-12 overflow-x-auto min-w-max">
               {menuItems?.nodes?.map((menu: any, index: any) => (
                 <Link href={menu?.uri ?? "/"} key={index}>
                   <li>
