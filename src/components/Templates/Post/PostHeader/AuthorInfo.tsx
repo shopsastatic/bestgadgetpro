@@ -13,7 +13,7 @@ export function AuthorInfo({ post, publishedAt }: any) {
                     <Link href={author?.uri ?? "/"}>
                         <Image
                             src={authorAvatar}
-                            alt={author.name}
+                            alt={author?.name ?? "BestGadgetPro Expert"}
                             fill
                             className="rounded-full object-cover"
                             sizes="48px"
@@ -21,8 +21,8 @@ export function AuthorInfo({ post, publishedAt }: any) {
                     </Link>
                 </div>
                 <div>
-                    <Link href={author?.uri ?? "/"} className="font-medium text-gray-900">{author.name}</Link>
-                    <div className="text-sm text-gray-500">{author.ncUserMeta.ncBio}</div>
+                    <Link href={author?.uri ?? "/"} className="font-medium text-gray-900">{author?.name}</Link>
+                    <div className="text-sm text-gray-500">{author?.ncUserMeta?.ncBio}</div>
                 </div>
             </div>
             <div className="flex sm:block items-center gap-6 sm:ml-auto text-sm text-gray-500">

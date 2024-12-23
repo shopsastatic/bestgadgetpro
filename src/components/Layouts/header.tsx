@@ -5,8 +5,6 @@ import { Search, MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import MobileNavigation from '../MobileNav';
-import lodash from 'lodash';
-import { getLastPath } from '@/app/categories/page';
 
 // Cache structure to store search results
 const searchCache = new Map();
@@ -20,11 +18,11 @@ interface SearchResult {
 }
 
 export function lastPath(url: any) {
-    if (url) {
-        const cleanUrl = url?.replace(/\/$/, '');
-        return cleanUrl.split('/').pop() + '/';
-    }
-    return null;
+  if (url) {
+    const cleanUrl = url?.replace(/\/$/, '');
+    return cleanUrl.split('/').pop() + '/';
+  }
+  return null;
 }
 
 export const Header = ({ menuItems, menuSidebarItems }: any) => {
@@ -61,19 +59,38 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
     }
   };
 
-  // Debounced search function
-  const debouncedSearch = useCallback(
-    lodash.debounce((term: string) => {
-      if (term.length > 2) {
-        setIsSearching(true);
-        fetchSearchResults(term);
-      } else {
-        setSearchResults([]);
-        setIsSearching(false);
+  const useDebounce = (callback: Function, delay: number) => {
+    const timeoutRef = React.useRef<NodeJS.Timeout>();
+  
+    React.useEffect(() => {
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
+    }, []);
+  
+    return React.useCallback((...args: any[]) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-    }, 500),
-    []
-  );
+  
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    }, [callback, delay]);
+  };
+
+  // Debounced search function
+  const debouncedSearch = useDebounce((term: string) => {
+    if (term.length > 2) {
+      setIsSearching(true);
+      fetchSearchResults(term);
+    } else {
+      setSearchResults([]);
+      setIsSearching(false);
+    }
+  }, 500);
 
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
