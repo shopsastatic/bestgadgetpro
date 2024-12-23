@@ -9,11 +9,12 @@ import { RootQueryToMenuItemConnection } from '@/gql/graphql';
 const PageContainer = async ({ children }: { children: React.ReactNode }) => {
     const menuQuery = gql`
         query MenuQuery {
-            menuItems(where: { location: MAIN_MENU }) {
+            menuItems(where: { location: PRIMARY }) {
                 nodes {
                     uri
                     target
                     label
+                    parentId
                 }
             }
         }
@@ -39,6 +40,8 @@ const PageContainer = async ({ children }: { children: React.ReactNode }) => {
     const { menuItems } = await fetchGraphQL<{
         menuItems: RootQueryToMenuItemConnection;
     }>(print(menuQuery));
+
+    console.log(menuItems)
 
     const menuSidebarItems = await fetchGraphQL<{
         menuItems: any;
