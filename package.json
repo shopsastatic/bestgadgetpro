@@ -10,6 +10,7 @@
   "dependencies": {
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.464.0",
     "next": "latest",
     "react": "18.3.1",
@@ -20,6 +21,7 @@
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.3.3",
     "@graphql-codegen/schema-ast": "^4.1.0",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
