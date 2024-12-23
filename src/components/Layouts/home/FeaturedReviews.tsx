@@ -7,34 +7,37 @@ import { Clock, ArrowRight, TrendingUp, BookOpen, History } from 'lucide-react';
 
 const reviews = [
     {
-        category: "Monitors",
-        image: "/api/placeholder/400/300",
+        category: "Bedding",
+        image: "https://content.bestgadgetpro.com/wp-content/uploads/2024/12/Homemate-Electric-Blanket-Queen-Size-84x90-Heated-Blanket-Queen.jpg",
         badges: ["Editor's Choice", "Best Value"],
-        title: "Top 12 High-Refresh Gaming Monitors Worth Every Dollar",
+        title: "10 Best Electric Blankets - Tested for Warmth & Safety (2025 Reviews)",
         description: "Comprehensive comparison of top gaming laptops with the latest GPUs and processors",
         rating: 4.8,
         daysAgo: 2,
         readTime: 15,
+        link: "https://bestgadgetpro.com/best-electric-blankets-safety-tested/"
     },
     {
-        category: "Tools & Home Improvement",
-        image: "/api/placeholder/400/300",
+        category: "Electronics",
+        image: "https://content.bestgadgetpro.com/wp-content/uploads/2024/12/Anker-s-Soundcore-Space-One_20230829-151132_full.jpeg",
         badges: ["Best Seller", "Most Reviewed"],
-        title: "Best Air Purifiers 2024 - Top 10 Expert Tested Models",
+        title: "9 Best Noise Cancelling Headphones: Expert-Tested Premium Models 2025",
         description: "In-depth analysis of the most effective air purifiers for different room sizes",
         rating: 4.9,
         daysAgo: 7,
         readTime: 12,
+        link: "https://bestgadgetpro.com/best-noise-cancelling-headphones-premium/"
     },
     {
-        category: "Video Games",
-        image: "/api/placeholder/400/300",
+        category: "Electric Space Heaters",
+        image: "https://content.bestgadgetpro.com/wp-content/uploads/2024/12/7130RFj1xL._AC_SL1500_.jpg",
         badges: ["Premium Pick"],
-        title: "Best Noise-Cancelling Gaming Headsets 2024",
+        title: "10 Best Electric Heaters for Large Rooms - Expert Tested &amp; Reviewed 2025",
         description: "Detailed comparison of high-end noise-cancelling headphones with sound quality tests",
         rating: 4.7,
         daysAgo: 3,
         readTime: 18,
+        link: "https://bestgadgetpro.com/best-electric-heaters-large-rooms-review/"
     }
 ];
 
@@ -62,14 +65,14 @@ export default function FeaturedReviews() {
     const getReviewsByTab = (tabId: string) => {
         switch (tabId) {
             case 'buying':
-                return reviews.filter(review => review.category === "Tools & Home Improvement");
+                // Return last 2 items from reviews array for buying guides
+                return reviews.slice(-2);
             case 'latest':
                 return reviews.sort((a, b) => a.daysAgo - b.daysAgo);
             default:
                 return reviews;
         }
     };
-
 
     const currentReviews = getReviewsByTab(activeTab);
 
@@ -88,8 +91,8 @@ export default function FeaturedReviews() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${activeTab === tab.id
-                                    ? 'bg-blue-500 text-white'
-                                    : 'text-gray-600 hover:bg-gray-100'
+                                ? 'bg-blue-500 text-white'
+                                : 'text-gray-600 hover:bg-gray-100'
                                 }`}
                         >
                             {tab.icon}
@@ -103,17 +106,17 @@ export default function FeaturedReviews() {
                 {currentReviews.map((review, index) => (
                     <Link
                         key={index}
-                        href="#"
+                        href={review.link ?? "/"}
                         className="group bg-white rounded-xl overflow-hidden border hover:shadow-lg transition-all"
                     >
                         <div className="flex flex-col sm:flex-row">
                             {/* Image Section */}
-                            <div className="relative w-full sm:w-[280px] h-[200px] sm:h-full flex-shrink-0">
+                            <div className="relative w-full sm:w-[280px] min-h-[200px] h-[200px] sm:h-full flex-shrink-0">
                                 <Image
                                     src={review.image}
                                     alt={review.title}
                                     fill
-                                    className="object-cover"
+                                    className="object-contain"
                                 />
                                 <div className="absolute top-4 left-4">
                                     <span className="bg-white/90 backdrop-blur-sm text-sm px-3 py-1 rounded-full">
@@ -170,9 +173,11 @@ export default function FeaturedReviews() {
 
             {/* View All Button */}
             <div className="text-center mt-8">
-                <button className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors">
-                    View More
-                </button>
+                <Link href={"/categories"}>
+                    <button className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                        View More Categories
+                    </button>
+                </Link>
             </div>
         </div>
     );

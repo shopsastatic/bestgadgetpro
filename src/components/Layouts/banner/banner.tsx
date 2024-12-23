@@ -10,7 +10,7 @@ export function Banner() {
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20"></div>
       
       <div className="relative">
-        <div className="container mx-auto px-4 !pt-16 !pb-24">
+        <div className="container mx-auto px-4 !pt-16 !pb-14">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-8 md:mb-0 md:mr-8 md:w-1/2">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
@@ -28,14 +28,14 @@ export function Banner() {
               
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  href="/awards"
+                  href="/categories"
                   className="inline-flex items-center gap-2 bg-white text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                 >
                   See the winners
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link 
-                  href="/reviews"
+                  href="/categories"
                   className="inline-flex items-center gap-2 bg-blue-700/30 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700/40 transition-colors"
                 >
                   Latest Reviews

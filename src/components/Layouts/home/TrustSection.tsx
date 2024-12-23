@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, Star, Clock, Award, Shield, BarChart2, ThumbsUp, LineChart } from 'lucide-react';
+import Link from 'next/link';
 
 export default function TrustSection() {
     return (
@@ -126,10 +127,12 @@ export default function TrustSection() {
 
                 {/* CTA */}
                 <div className="text-center">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 inline-flex items-center gap-2">
-                        Start Reading Reviews
-                        <Star className="w-4 h-4" />
-                    </button>
+                    <Link href={"/categories"}>
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-medium transition-all hover:scale-105 inline-flex items-center gap-2">
+                            Start Reading Reviews
+                            <Star className="w-4 h-4" />
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

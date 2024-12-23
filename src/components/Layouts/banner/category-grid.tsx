@@ -1,13 +1,12 @@
-import { Smartphone, Laptop, Tv, Headphones, Watch, Speaker } from 'lucide-react';
+import { Smartphone, Laptop, Tv, Headphones, Watch, Speaker, Home } from 'lucide-react';
 import Link from 'next/link';
 
 const categories = [
-  { icon: Smartphone, label: 'Smartphones', href: '/category/smartphones' },
-  { icon: Laptop, label: 'Laptops', href: '/category/laptops' },
-  { icon: Tv, label: 'TVs', href: '/category/tvs' },
-  { icon: Headphones, label: 'Audio', href: '/category/audio' },
-  { icon: Watch, label: 'Wearables', href: '/category/wearables' },
-  { icon: Speaker, label: 'Smart Home', href: '/category/smart-home' },
+  { icon: Smartphone, label: 'Electronics', href: '/electronics' },
+  { icon: Home, label: 'Home & Kitchen', href: '/home-kitchen' },
+  { icon: Laptop, label: 'Computers', href: '/computers-accessories-34081' },
+  { icon: Headphones, label: 'Audio', href: '/home-audio-63157' },
+  { icon: Speaker, label: 'Speakers', href: '/speakers-18917' },
 ];
 
 export function CategoryGrid() {
