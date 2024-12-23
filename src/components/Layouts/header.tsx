@@ -19,6 +19,14 @@ interface SearchResult {
   url: string;
 }
 
+export function lastPath(url: any) {
+    if (url) {
+        const cleanUrl = url?.replace(/\/$/, '');
+        return cleanUrl.split('/').pop() + '/';
+    }
+    return null;
+}
+
 export const Header = ({ menuItems, menuSidebarItems }: any) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -98,7 +106,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         <div className="py-2">
           {searchResults.map((result) => (
             <Link
-              href={getLastPath(result?.url ?? "/") ?? "/"}
+              href={lastPath(result?.url ?? "/") ?? "/"}
               key={`${result.type}-${result.id}`}
               onClick={() => setShowDropdown(false)}
             >
@@ -190,7 +198,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
           <nav className="container mx-auto !py-0">
             <ul className="flex items-center justify-center gap-7 h-12 overflow-x-auto min-w-max">
               {menuItems?.nodes?.map((menu: any, index: number) => (
-                <Link href={menu?.uri ?? "/"} key={index}>
+                <Link href={lastPath(menu?.uri) ?? "/"} key={index}>
                   <li>
                     <button className="w-full text-left text-sm px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
                       {menu.label}
