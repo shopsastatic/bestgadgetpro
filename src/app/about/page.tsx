@@ -56,7 +56,7 @@ const values = [
 export default function AboutPage() {
   return (
     <PageContainer>
-      <div className="min-h-screen bg-white mt-10 my-32">
+      <div className="container min-h-screen bg-white mt-10 my-32">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-b from-gray-900 to-gray-800 text-white py-24 rounded-lg px-4">
           <div className="absolute inset-0 overflow-hidden">

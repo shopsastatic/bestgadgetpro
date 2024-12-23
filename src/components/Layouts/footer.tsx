@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Globe, Shield, Send, Monitor, Camera, Watch, Wind, Box, Phone, Headphones, Fan } from 'lucide-react';
+import { Award, Globe, Shield, Send, Monitor, Camera, Watch, Wind, Box, Phone, Headphones, Fan, PhoneIcon, Smartphone, Home, Speaker } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -60,10 +60,13 @@ const SeoContent = () => {
                         <div>
                             <h3 className="font-semibold mb-4">Products</h3>
                             <ul className="space-y-2">
-                                <li><Link href="#" className="text-gray-400 hover:text-white">Air Fryers</Link></li>
-                                <li><Link href="#" className="text-gray-400 hover:text-white">Monitors</Link></li>
-                                <li><Link href="#" className="text-gray-400 hover:text-white">Cameras</Link></li>
-                                <li><Link href="#" className="text-gray-400 hover:text-white">Gaming Chairs</Link></li>
+                                <li><Link href="/computers-accessories-34081" className="text-gray-400 hover:text-white">Computers</Link></li>
+                                <li><Link href="/headphones-earbuds-96804" className="text-gray-400 hover:text-white">Headphones & Earbuds</Link></li>
+                                <li><Link href="/speakers-18917" className="text-gray-400 hover:text-white">Speakers</Link></li>
+                                <li><Link href="/television-video-12749" className="text-gray-400 hover:text-white">Television & Video</Link></li>
+                                <li><Link href="/video-projectors-18846" className="text-gray-400 hover:text-white">Video Projectors</Link></li>
+                                <li><Link href="/health-household" className="text-gray-400 hover:text-white">Health & Household</Link></li>
+                                <li><Link href="/pet-supplies" className="text-gray-400 hover:text-white">Pet Supplies</Link></li>
                             </ul>
                         </div>
                         <div>
@@ -80,38 +83,46 @@ const SeoContent = () => {
                         <div>
                             <h3 className="font-semibold mb-4">Popular Categories</h3>
                             <div className="grid grid-cols-1 gap-4">
-                                <div className="group cursor-pointer">
+                                <Link href={"/electronics"} className="group cursor-pointer">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                                            <Smartphone className="w-4 h-4 text-blue-500" />
+                                        </div>
+                                        <span className="text-gray-400 group-hover:text-white transition-colors">Electronics</span>
+                                    </div>
+                                </Link>
+                                <Link href={"/computers-accessories-34081"} className="group cursor-pointer">
                                     <div className="flex items-center gap-3">
                                         <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
                                             <Monitor className="w-4 h-4 text-blue-500" />
                                         </div>
-                                        <span className="text-gray-400 group-hover:text-white transition-colors">Monitors</span>
+                                        <span className="text-gray-400 group-hover:text-white transition-colors">Computers</span>
                                     </div>
-                                </div>
-                                <div className="group cursor-pointer">
+                                </Link>
+                                <Link href={"/home-kitchen"} className="group cursor-pointer">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                                            <Home className="w-4 h-4 text-blue-500" />
+                                        </div>
+                                        <span className="text-gray-400 group-hover:text-white transition-colors">Home & Kitchen</span>
+                                    </div>
+                                </Link>
+                                <Link href={"/camera-photo-34474/"} className="group cursor-pointer">
                                     <div className="flex items-center gap-3">
                                         <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
                                             <Camera className="w-4 h-4 text-blue-500" />
                                         </div>
                                         <span className="text-gray-400 group-hover:text-white transition-colors">Cameras</span>
                                     </div>
-                                </div>
-                                <div className="group cursor-pointer">
+                                </Link>
+                                <Link href={"/speakers-18917"} className="group cursor-pointer">
                                     <div className="flex items-center gap-3">
                                         <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
-                                            <Watch className="w-4 h-4 text-blue-500" />
+                                            <Speaker className="w-4 h-4 text-blue-500" />
                                         </div>
-                                        <span className="text-gray-400 group-hover:text-white transition-colors">Smartwatches</span>
+                                        <span className="text-gray-400 group-hover:text-white transition-colors">Speakers</span>
                                     </div>
-                                </div>
-                                <div className="group cursor-pointer">
-                                    <div className="flex items-center gap-3">
-                                        <div className="p-1.5 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
-                                            <Wind className="w-4 h-4 text-blue-500" />
-                                        </div>
-                                        <span className="text-gray-400 group-hover:text-white transition-colors">Air Purifiers</span>
-                                    </div>
-                                </div>
+                                </Link>
                             </div>
                         </div>
                         <div className='flex flex-col justify-between'>
