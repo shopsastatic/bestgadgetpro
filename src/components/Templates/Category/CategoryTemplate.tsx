@@ -68,7 +68,7 @@ export default async function CategoryTemplate({ node }: any) {
                                     <h2 className="text-xl font-semibold">Trending Reviews</h2>
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-6">
-                                    {node.children.nodes?.[0].posts.nodes.slice(0, 2).map((article: any, index: any) => (
+                                    {node?.children?.nodes?.[0]?.posts?.nodes?.slice(0, 2)?.map((article: any, index: any) => (
                                         <Link
                                             key={index}
                                             href={article.uri ?? "/"}
@@ -101,7 +101,7 @@ export default async function CategoryTemplate({ node }: any) {
                             </div>
 
                             {/* Latest Reviews */}
-                            {node.children.nodes?.[1]?.posts?.nodes?.slice(0, 4)?.length > 0 && (
+                            {node?.children?.nodes?.[1]?.posts?.nodes?.slice(0, 4)?.length > 0 && (
                                 <div className="bg-white rounded-xl shadow-lg p-6">
                                     <div className="flex justify-between items-center mb-6">
                                         <h2 className="text-xl font-semibold text-gray-900">Latest Reviews</h2>
@@ -114,7 +114,7 @@ export default async function CategoryTemplate({ node }: any) {
                                         </Link>
                                     </div>
                                     <div className="grid sm:grid-cols-2 gap-6">
-                                        {node.children.nodes?.[1]?.posts?.nodes?.slice(0, 4)?.map((article: any, index: any) => (
+                                        {node?.children?.nodes?.[1]?.posts?.nodes?.slice(0, 4)?.map((article: any, index: any) => (
                                             <Link
                                                 key={index}
                                                 href={article.uri ?? "/"}
