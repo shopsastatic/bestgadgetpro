@@ -38,7 +38,7 @@ const SeoContent = () => {
     <div className="container p-4">
       {/* Header */}
       <header>
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+        <h1 className="font-bold text-gray-900 mb-8">
           Top-Rated Digital Breathalyzers for Every Need in 2024
         </h1>
 

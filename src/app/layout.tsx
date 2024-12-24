@@ -2,6 +2,7 @@ import { draftMode } from "next/headers";
 import { Inter } from "next/font/google";
 
 import "@/app/globals.css";
+import "@/app/index.scss";
 
 import { PreviewNotice } from "@/components/Globals/PreviewNotice/PreviewNotice";
 
