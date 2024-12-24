@@ -107,6 +107,13 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
   // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      
+      // Check if the click is on a search result link or its children
+      if (target.closest('a')) {
+        return;
+      }
+
       if (
         searchContainerRef.current && 
         !searchContainerRef.current.contains(event.target as Node) &&
