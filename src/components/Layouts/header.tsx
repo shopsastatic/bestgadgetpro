@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,6 +32,22 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Add click outside handler
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   // Function to fetch search results
   const fetchSearchResults = async (term: string) => {
     try {
@@ -61,7 +77,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
 
   const useDebounce = (callback: Function, delay: number) => {
     const timeoutRef = React.useRef<NodeJS.Timeout>();
-  
+
     React.useEffect(() => {
       return () => {
         if (timeoutRef.current) {
@@ -69,12 +85,12 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         }
       };
     }, []);
-  
+
     return React.useCallback((...args: any[]) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-  
+
       timeoutRef.current = setTimeout(() => {
         callback(...args);
       }, delay);
@@ -163,7 +179,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
             </div>
 
             <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-              <div className="relative w-full">
+              <div className="relative w-full" ref={searchContainerRef}>
                 <input
                   type="text"
                   placeholder="Search products..."
@@ -197,7 +213,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         </div>
 
         <div className="md:hidden px-4 pb-4">
-          <div className="relative">
+          <div className="relative" ref={searchContainerRef}>
             <input
               type="text"
               placeholder="Search products..."

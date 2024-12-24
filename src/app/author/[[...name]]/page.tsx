@@ -119,7 +119,7 @@ export default async function Author({ params }: { params: any }) {
                                                     {achievement.icon}
                                                 </div>
                                                 <div>
-                                                    <h3 className="font-semibold text-gray-900">{achievement.title}</h3>
+                                                    <h4 className="text-base font-semibold text-gray-900">{achievement.title}</h4>
                                                     <p className="text-gray-500 text-sm">{achievement.description}</p>
                                                 </div>
                                             </div>

@@ -151,7 +151,7 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ onClose, isOpen, me
               <ChevronLeft size={24} />
             </button>
           ) : null}
-          <h1 className="flex-1 font-medium">{currentScreenData.title}</h1>
+          <h4 className="flex-1 font-medium">{currentScreenData.title}</h4>
           <button 
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full"

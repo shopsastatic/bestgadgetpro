@@ -10,9 +10,9 @@ const SeoContent = () => {
             <section className="container mx-auto px-4 py-12 md:py-20">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="space-y-6 md:w-1/2">
-                        <h1 className="text-4xl md:text-5xl font-bold">
+                        <h3 className="text-4xl md:text-5xl font-bold">
                             Your Tech Review Destination
-                        </h1>
+                        </h3>
                         <p className="text-gray-400 text-lg">
                             Delivering comprehensive tech reviews, in-depth comparisons, and expert buying guides backed by rigorous testing and real-world experience. Join over 500,000 tech enthusiasts making smarter decisions.
                         </p>

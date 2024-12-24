@@ -44,7 +44,7 @@ export default async function CategoryTemplate({ node }: any) {
                         {/* Subcategories Sidebar */}
                         <div className="lg:col-span-4">
                             <div className="bg-white rounded-xl shadow-lg p-6 sticky top-0">
-                                <h2 className="font-semibold text-gray-900 mb-4">Browse By Category</h2>
+                                <h3 className="font-semibold text-gray-900 mb-4">Browse By Category</h3>
                                 <div className="space-y-2">
                                     {node?.children?.nodes.map((subcat: any, index: any) => (
                                         <Link
@@ -65,7 +65,7 @@ export default async function CategoryTemplate({ node }: any) {
                             <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
                                 <div className="flex items-center gap-2 text-blue-600 mb-6">
                                     <TrendingUp className="w-5 h-5" />
-                                    <h2 className="text-xl font-semibold">Trending Reviews</h2>
+                                    <h3 className="text-xl font-semibold">Trending Reviews</h3>
                                 </div>
                                 <div className="grid sm:grid-cols-2 gap-6">
                                     {node?.children?.nodes?.[0]?.posts?.nodes?.slice(0, 2)?.map((article: any, index: any) => (
@@ -90,9 +90,9 @@ export default async function CategoryTemplate({ node }: any) {
                                                         <Star className="w-4 h-4 fill-current" />
                                                         <span className="text-white text-sm">{index == 1 ? 4.7 : 4.9}</span>
                                                     </div>
-                                                    <h3 className="text-white font-medium group-hover:text-blue-400 transition-colors line-clamp-2">
+                                                    <h5 className="text-white font-medium group-hover:text-blue-400 transition-colors line-clamp-2">
                                                         {article.title}
-                                                    </h3>
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </Link>
@@ -104,7 +104,7 @@ export default async function CategoryTemplate({ node }: any) {
                             {node?.children?.nodes?.[1]?.posts?.nodes?.slice(0, 4)?.length > 0 && (
                                 <div className="bg-white rounded-xl shadow-lg p-6">
                                     <div className="flex justify-between items-center mb-6">
-                                        <h2 className="text-xl font-semibold text-gray-900">Latest Reviews</h2>
+                                        <h3 className="text-xl font-semibold text-gray-900">Latest Reviews</h3>
                                         <Link
                                             href={getLastPath(node.children.nodes?.[1]?.uri) ?? "/"}
                                             className="text-blue-600 hover:text-blue-700 inline-flex items-center text-sm font-medium group"
@@ -134,9 +134,9 @@ export default async function CategoryTemplate({ node }: any) {
                                                         <Star className="w-3 h-3 fill-current" />
                                                         <span>{article.rating}</span>
                                                     </div>
-                                                    <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                                    <h5 className="text-base font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                                                         {article.title}
-                                                    </h3>
+                                                    </h5>
                                                 </div>
                                             </Link>
                                         ))}
