@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Search, MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import MobileNavigation from '../MobileNav';
 
 // Cache structure to store search results
@@ -31,6 +32,14 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const router = useRouter();
+
+  // Handle search submission
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      router.push(`/search/${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
   
   // Refs for click outside handling
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -196,12 +205,24 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
                 <input
                   type="text"
                   placeholder="Search products..."
-                  className="w-full px-4 py-2 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-2 pr-20 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   value={searchTerm}
                   onChange={handleSearchChange}
                   onFocus={() => setShowDropdown(true)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSearch();
+                    }
+                  }}
                 />
-                <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
+                <button 
+                  onClick={handleSearch}
+                  className="absolute right-2 top-1.5 p-1 hover:bg-gray-700 rounded-md transition-colors"
+                  aria-label="Search"
+                >
+                  <Search className="text-gray-400" size={20} />
+                </button>
                 {showDropdown && <SearchDropdown />}
               </div>
             </div>
@@ -227,15 +248,27 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
 
         <div className="md:hidden px-4 pb-4">
           <div className="relative" ref={mobileSearchContainerRef}>
-            <input
+                          <input
               type="text"
               placeholder="Search products..."
-              className="w-full px-4 py-2 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-4 py-2 pr-20 bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={searchTerm}
               onChange={handleSearchChange}
               onFocus={() => setShowDropdown(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleSearch();
+                }
+              }}
             />
-            <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
+            <button 
+              onClick={handleSearch}
+              className="absolute right-2 top-1.5 p-1 hover:bg-gray-700 rounded-md transition-colors"
+              aria-label="Search"
+            >
+              <Search className="text-gray-400" size={20} />
+            </button>
             {showDropdown && <SearchDropdown />}
           </div>
         </div>

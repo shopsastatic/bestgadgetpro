@@ -47,33 +47,35 @@ export async function middleware(request: NextRequest) {
 
   if (pathNameWithoutTrailingSlash === '/reports') {
     return NextResponse.rewrite(new URL('/404', request.url), {
-        status: 404,
-        headers: {
-            'X-Robots-Tag': 'noindex'
-        }
+      status: 404,
+      headers: {
+        'X-Robots-Tag': 'noindex'
+      }
     });
-}
+  }
+
+  console.log(pathName)
 
 
   if (pathName.includes('_next') ||
-        pathName.includes('api') ||
-        pathName === '/' ||
-        pathName.includes('favicon') ||
-        pathName.startsWith('/images/') ||
-        pathName.startsWith('/author/') ||
-        pathName.startsWith('/search/') ||
-        pathName.startsWith('/public/')) {
-        return NextResponse.next()
-    }
+    pathName.includes('api') ||
+    pathName === '/' ||
+    pathName.includes('favicon') ||
+    pathName.startsWith('/images/') ||
+    pathName.startsWith('/author/') ||
+    pathName.startsWith('/search/') ||
+    pathName.startsWith('/public/')) {
+    return NextResponse.next()
+  }
 
-    const segments = pathName.split('/').filter(Boolean)
+  const segments = pathName.split('/').filter(Boolean)
 
-    if (segments.length >= 2) {
-        return NextResponse.rewrite(new URL('/404', request.url), {
-            status: 404,
-            headers: {
-                'X-Robots-Tag': 'noindex'
-            }
-        });
-    }
+  if (segments.length >= 2) {
+    return NextResponse.rewrite(new URL('/404', request.url), {
+      status: 404,
+      headers: {
+        'X-Robots-Tag': 'noindex'
+      }
+    });
+  }
 }

@@ -41,8 +41,6 @@ const PageContainer = async ({ children }: { children: React.ReactNode }) => {
         menuItems: RootQueryToMenuItemConnection;
     }>(print(menuQuery));
 
-    console.log(menuItems)
-
     const menuSidebarItems = await fetchGraphQL<{
         menuItems: any;
     }>(print(menuSidebarQuery)) as any;
