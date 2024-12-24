@@ -31,22 +31,10 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-
+  
+  // Refs for click outside handling
   const searchContainerRef = useRef<HTMLDivElement>(null);
-
-  // Add click outside handler
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-        setShowDropdown(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const mobileSearchContainerRef = useRef<HTMLDivElement>(null);
 
   // Function to fetch search results
   const fetchSearchResults = async (term: string) => {
@@ -77,7 +65,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
 
   const useDebounce = (callback: Function, delay: number) => {
     const timeoutRef = React.useRef<NodeJS.Timeout>();
-
+  
     React.useEffect(() => {
       return () => {
         if (timeoutRef.current) {
@@ -85,12 +73,12 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         }
       };
     }, []);
-
+  
     return React.useCallback((...args: any[]) => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-
+  
       timeoutRef.current = setTimeout(() => {
         callback(...args);
       }, delay);
@@ -115,6 +103,25 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
     setShowDropdown(true);
     debouncedSearch(value);
   };
+
+  // Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current && 
+        !searchContainerRef.current.contains(event.target as Node) &&
+        mobileSearchContainerRef.current && 
+        !mobileSearchContainerRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Clear cache entries older than 1 hour
   useEffect(() => {
@@ -141,7 +148,6 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
             <Link
               href={lastPath(result?.url ?? "/") ?? "/"}
               key={`${result.type}-${result.id}`}
-              onClick={() => setShowDropdown(false)}
             >
               <div className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
                 <div className="text-sm text-gray-200">{result.title}</div>
@@ -213,7 +219,7 @@ export const Header = ({ menuItems, menuSidebarItems }: any) => {
         </div>
 
         <div className="md:hidden px-4 pb-4">
-          <div className="relative" ref={searchContainerRef}>
+          <div className="relative" ref={mobileSearchContainerRef}>
             <input
               type="text"
               placeholder="Search products..."
