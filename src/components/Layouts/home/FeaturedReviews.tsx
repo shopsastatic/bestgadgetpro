@@ -116,7 +116,7 @@ export default function FeaturedReviews() {
                                     src={review.image}
                                     alt={review.title}
                                     fill
-                                    className="object-contain"
+                                    className="object-contain w-[70%] m-auto"
                                 />
                                 <div className="absolute top-4 left-4">
                                     <span className="bg-white/90 backdrop-blur-sm text-sm px-3 py-1 rounded-full">
