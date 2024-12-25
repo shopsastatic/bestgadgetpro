@@ -1,9 +1,36 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import { Award, Globe, Shield, Send, Monitor, Camera, Watch, Wind, Box, Phone, Headphones, Fan, PhoneIcon, Smartphone, Home, Speaker } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const SeoContent = () => {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        if (!email) {
+            setMessage('Please enter your email address');
+            return;
+        }
+
+        setLoading(true);
+        
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            setMessage('Thank you for subscribing! We will keep you updated with the latest tech reviews.');
+            setEmail('');
+        } catch (error) {
+            setMessage('Something went wrong. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <footer className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
             {/* Hero Section */}
@@ -16,17 +43,34 @@ const SeoContent = () => {
                         <p className="text-gray-400 text-lg">
                             Delivering comprehensive tech reviews, in-depth comparisons, and expert buying guides backed by rigorous testing and real-world experience. Join over 500,000 tech enthusiasts making smarter decisions.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
-                            />
-                            <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2">
-                                <Send className="w-5 h-5" />
-                                Subscribe
-                            </button>
-                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                                />
+                                <button 
+                                    type="submit"
+                                    disabled={loading}
+                                    className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {loading ? (
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                    ) : (
+                                        <Send className="w-5 h-5" />
+                                    )}
+                                    {loading ? 'Sending...' : 'Subscribe'}
+                                </button>
+                            </div>
+                            {message && (
+                                <div className={`text-sm ${message.includes('error') ? 'text-red-400' : 'text-green-400'}`}>
+                                    {message}
+                                </div>
+                            )}
+                        </form>
                     </div>
                     <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md">
@@ -50,8 +94,6 @@ const SeoContent = () => {
                     </div>
                 </div>
             </section>
-
-
 
             {/* Footer */}
             <div className="bg-gray-900 mt-12">
@@ -157,14 +199,5 @@ const SeoContent = () => {
         </footer>
     );
 };
-
-const CategoryCard = ({ icon, title }: any) => (
-    <div className="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer">
-        <div className="text-blue-500 mb-3">
-            {icon}
-        </div>
-        <h3 className="font-medium">{title}</h3>
-    </div>
-);
 
 export default SeoContent;
