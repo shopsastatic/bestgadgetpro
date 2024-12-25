@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 import PageContainer from "@/components/Layouts/PageContainer";
 import Link from "next/link";
 
@@ -14,7 +13,7 @@ export async function generateMetadata({ params }: any) {
     };
 }
 
-export function lastPath(url: string | null | undefined) {
+function lastPath(url: string | null | undefined) {
     if (url) {
         const cleanUrl = url?.replace(/\/$/, '');
         return cleanUrl.split('/').pop() + '/';
@@ -45,9 +44,6 @@ export default async function Search({ params }: any) {
 
         const categories = searchResults.filter((result: any) => result.type === 'category');
         const posts = searchResults.filter((result: any) => result.type === 'post');
-
-        console.log(posts)
-
 
         return (
             <PageContainer>
