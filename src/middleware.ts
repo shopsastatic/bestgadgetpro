@@ -54,9 +54,6 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  console.log(pathName)
-
-
   if (pathName.includes('_next') ||
     pathName.includes('api') ||
     pathName === '/' ||
