@@ -111,9 +111,9 @@ export default function TrustSection() {
                                 <div className={`${feature.color} mb-4 group-hover:scale-110 transition-transform`}>
                                     {feature.icon}
                                 </div>
-                                <h3 className="text-xl font-semibold text-white mb-3">
+                                <h4 className="text-xl font-semibold text-white mb-3">
                                     {feature.title}
-                                </h3>
+                                </h4>
                                 <p className="text-gray-400 text-sm mb-4 min-h-[40px]"> {/* Thêm min-height */}
                                     {feature.description}
                                 </p>

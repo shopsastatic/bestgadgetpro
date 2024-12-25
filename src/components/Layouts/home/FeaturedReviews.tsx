@@ -19,7 +19,7 @@ const reviews = [
     },
     {
         category: "Electronics",
-        image: "https://content.bestgadgetpro.com/wp-content/uploads/2024/12/Anker-s-Soundcore-Space-One_20230829-151132_full.jpeg",
+        image: "https://content.bestgadgetpro.com/wp-content/uploads/2024/12/Anker-s-Soundcore-Space-One_20230829-151132_full.jpg",
         badges: ["Best Seller", "Most Reviewed"],
         title: "9 Best Noise Cancelling Headphones: Expert-Tested Premium Models 2025",
         description: "In-depth analysis of the most effective air purifiers for different room sizes",
@@ -116,7 +116,7 @@ export default function FeaturedReviews() {
                                     src={review.image}
                                     alt={review.title}
                                     fill
-                                    className="object-contain w-[70%] m-auto"
+                                    className="object-contain !w-[40%] max-w-[120px] m-auto"
                                 />
                                 <div className="absolute top-4 left-4">
                                     <span className="bg-white/90 backdrop-blur-sm text-sm px-3 py-1 rounded-full">
@@ -143,9 +143,9 @@ export default function FeaturedReviews() {
                                     ))}
                                 </div>
 
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                <h4 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                                     {review.title}
-                                </h3>
+                                </h4>
 
                                 <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                                     {review.description}

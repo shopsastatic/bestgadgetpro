@@ -122,9 +122,9 @@ export default function OurProcess() {
                 className={`${activeTab === index ? 'block' : 'hidden'}`}
               >
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                  <h4 className="text-2xl font-bold text-gray-900 mb-3">
                     {step.title}
-                  </h3>
+                  </h4>
                   <p className="text-gray-600">
                     {step.description}
                   </p>

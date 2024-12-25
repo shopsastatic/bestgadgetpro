@@ -104,9 +104,9 @@ export default function ProductReviewsGrid() {
               </span>
             </div>
             <div className="absolute bottom-4 left-4 right-4">
-              <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">
+              <h4 className="text-xl font-bold text-white mb-2 line-clamp-2">
                 10 Best Smart Doorbell Cameras Tested for Home Security in 2025
-              </h3>
+              </h4>
               <div className="flex items-center gap-4 text-white/90 text-sm">
                 <div className="flex items-center gap-1">
                   <Clock className="w-4 h-4" />
@@ -160,9 +160,9 @@ export default function ProductReviewsGrid() {
             </div>
             <div className="p-6 flex-1">
               <div className="text-sm text-blue-600 mb-2">Video Games</div>
-              <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+              <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                 9 Best Gaming Headsets in 2025 - Pro-Tested Wireless &amp; Wired Models
-              </h3>
+              </h4>
               <div className="flex items-center gap-3 text-sm text-gray-500">
                 <div className="flex items-center gap-1">
                   <Zap className="w-4 h-4" />
@@ -190,9 +190,9 @@ export default function ProductReviewsGrid() {
             </div>
             <div className="p-6 flex-1">
               <div className="text-sm text-blue-600 mb-2">Video Games</div>
-              <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+              <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
                 10 Best Wireless Gaming Headsets - Pro-Tested for Immersive Audio 2025
-              </h3>
+              </h4>
               <div className="flex items-center gap-3 text-sm text-gray-500">
                 <div className="flex items-center gap-1">
                   <Zap className="w-4 h-4" />
@@ -218,9 +218,9 @@ export default function ProductReviewsGrid() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="text-sm text-blue-600 mb-2">Electronic Dictionaries</div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                   9 Best Translation Earbuds - Expert-Tested Real-Time Language Devices
-                </h3>
+                </h4>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
                 <Star className="w-5 h-5 text-yellow-400 fill-current" />
@@ -261,9 +261,9 @@ export default function ProductReviewsGrid() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="text-sm text-blue-600 mb-2">Computers & Accessories</div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                   8 Best Travel Routers for Secure Wi-Fi on the Go - Expert Tested 2025
-                </h3>
+                </h4>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
                 <Star className="w-5 h-5 text-yellow-400 fill-current" />
@@ -304,9 +304,9 @@ export default function ProductReviewsGrid() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="text-sm text-blue-600 mb-2">Video Projectors</div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                   9 Best Home Projectors for Movie Nights - Expert Tested &amp; Compared
-                </h3>
+                </h4>
               </div>
               <div className="bg-gray-50 rounded-lg p-2">
                 <Star className="w-5 h-5 text-yellow-400 fill-current" />
